@@ -1,0 +1,768 @@
+EESchema Schematic File Version 4
+LIBS:cherry_breakout_2u-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector:Conn_01x07 J1
+U 1 1 5ADBC299
+P 1650 2100
+F 0 "J1" H 1570 1575 50  0000 C CNN
+F 1 "ConnLeft" H 1570 1666 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x07_Pitch2.54mm" H 1650 2100 50  0001 C CNN
+F 3 "~" H 1650 2100 50  0001 C CNN
+	1    1650 2100
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Conn_01x07 J2
+U 1 1 5ADBC349
+P 1800 4500
+F 0 "J2" H 1720 3975 50  0000 C CNN
+F 1 "ConnRight" H 1720 4066 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x07_Pitch2.54mm" H 1800 4500 50  0001 C CNN
+F 3 "~" H 1800 4500 50  0001 C CNN
+	1    1800 4500
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:LED_ARGB D1
+U 1 1 5ADBC55C
+P 4000 1800
+F 0 "D1" H 4000 2297 50  0000 C CNN
+F 1 "LED_A" H 4000 2206 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 4000 1750 50  0001 C CNN
+F 3 "~" H 4000 1750 50  0001 C CNN
+	1    4000 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_ARGB D2
+U 1 1 5ADBC6C2
+P 4000 2800
+F 0 "D2" H 4000 3297 50  0000 C CNN
+F 1 "LED_C" H 4000 3206 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 4000 2750 50  0001 C CNN
+F 3 "~" H 4000 2750 50  0001 C CNN
+	1    4000 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_ARGB D5
+U 1 1 5ADBC730
+P 5100 2800
+F 0 "D5" H 5100 3297 50  0000 C CNN
+F 1 "LED_D" H 5100 3206 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 5100 2750 50  0001 C CNN
+F 3 "~" H 5100 2750 50  0001 C CNN
+	1    5100 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_ARGB D7
+U 1 1 5ADBC86C
+P 6100 1800
+F 0 "D7" H 6100 2297 50  0000 C CNN
+F 1 "LED_B" H 6100 2206 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 6100 1750 50  0001 C CNN
+F 3 "~" H 6100 1750 50  0001 C CNN
+	1    6100 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:D D15
+U 1 1 5ADBCB38
+P 9600 1800
+F 0 "D15" H 9600 2016 50  0000 C CNN
+F 1 "D_B" H 9600 1925 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 9600 1800 50  0001 C CNN
+F 3 "" H 9600 1800 50  0001 C CNN
+	1    9600 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:D D12
+U 1 1 5ADBCC24
+P 7750 3100
+F 0 "D12" H 7750 3316 50  0000 C CNN
+F 1 "D_C" H 7750 3225 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 7750 3100 50  0001 C CNN
+F 3 "" H 7750 3100 50  0001 C CNN
+	1    7750 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:D D13
+U 1 1 5ADBCC8C
+P 8800 3100
+F 0 "D13" H 8800 3316 50  0000 C CNN
+F 1 "D_D" H 8800 3225 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 8800 3100 50  0001 C CNN
+F 3 "" H 8800 3100 50  0001 C CNN
+	1    8800 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:D D14
+U 1 1 5ADBCCF0
+P 9550 3100
+F 0 "D14" H 9550 3316 50  0000 C CNN
+F 1 "D_E" H 9550 3225 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 9550 3100 50  0001 C CNN
+F 3 "" H 9550 3100 50  0001 C CNN
+	1    9550 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:D D11
+U 1 1 5ADBCD54
+P 7750 1800
+F 0 "D11" H 7750 2016 50  0000 C CNN
+F 1 "D_A" H 7750 1925 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 7750 1800 50  0001 C CNN
+F 3 "" H 7750 1800 50  0001 C CNN
+	1    7750 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW7
+U 1 1 5ADBCFAC
+P 9900 1600
+F 0 "SW7" V 9854 1748 50  0000 L CNN
+F 1 "B" V 9945 1748 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 9900 1800 50  0001 C CNN
+F 3 "" H 9900 1800 50  0001 C CNN
+	1    9900 1600
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW1
+U 1 1 5ADBD336
+P 8100 1600
+F 0 "SW1" V 8054 1748 50  0000 L CNN
+F 1 "A" V 8145 1748 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_2.00u_PCB" H 8100 1800 50  0001 C CNN
+F 3 "" H 8100 1800 50  0001 C CNN
+	1    8100 1600
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW8
+U 1 1 5ADBD3C8
+P 9900 2400
+F 0 "SW8" V 9854 2548 50  0000 L CNN
+F 1 "E" V 9945 2548 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 9900 2600 50  0001 C CNN
+F 3 "" H 9900 2600 50  0001 C CNN
+	1    9900 2400
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW6
+U 1 1 5ADBD496
+P 9100 2400
+F 0 "SW6" V 9054 2548 50  0000 L CNN
+F 1 "D" V 9145 2548 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 9100 2600 50  0001 C CNN
+F 3 "" H 9100 2600 50  0001 C CNN
+	1    9100 2400
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW2
+U 1 1 5ADBD440
+P 8100 2400
+F 0 "SW2" V 8054 2548 50  0000 L CNN
+F 1 "C" V 8145 2548 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 8100 2600 50  0001 C CNN
+F 3 "" H 8100 2600 50  0001 C CNN
+	1    8100 2400
+	0    1    1    0   
+$EndComp
+$Comp
+L device:LED_ARGB D8
+U 1 1 5ADBC7A8
+P 6100 2800
+F 0 "D8" H 6100 3297 50  0000 C CNN
+F 1 "LED_E" H 6100 3206 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 6100 2750 50  0001 C CNN
+F 3 "~" H 6100 2750 50  0001 C CNN
+	1    6100 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_RGB D3
+U 1 1 5AED9CF7
+P 4000 4100
+F 0 "D3" H 4000 4597 50  0000 C CNN
+F 1 "LED_Cb" H 4000 4506 50  0000 C CNN
+F 2 "cherry_footprint:LED_smd_1214" H 4000 4050 50  0001 C CNN
+F 3 "~" H 4000 4050 50  0001 C CNN
+	1    4000 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_RGB D9
+U 1 1 5AED9E2D
+P 6100 4100
+F 0 "D9" H 6100 4597 50  0000 C CNN
+F 1 "LED_Eb" H 6100 4506 50  0000 C CNN
+F 2 "cherry_footprint:LED_smd_1214" H 6100 4050 50  0001 C CNN
+F 3 "~" H 6100 4050 50  0001 C CNN
+	1    6100 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_RGB D6
+U 1 1 5AED9F0B
+P 5100 4100
+F 0 "D6" H 5100 4597 50  0000 C CNN
+F 1 "LED_Db" H 5100 4506 50  0000 C CNN
+F 2 "cherry_footprint:LED_smd_1214" H 5100 4050 50  0001 C CNN
+F 3 "~" H 5100 4050 50  0001 C CNN
+	1    5100 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_RGB D10
+U 1 1 5AED9F7D
+P 6100 5100
+F 0 "D10" H 6100 5597 50  0000 C CNN
+F 1 "LED_Bb" H 6100 5506 50  0000 C CNN
+F 2 "cherry_footprint:LED_smd_1214" H 6100 5050 50  0001 C CNN
+F 3 "~" H 6100 5050 50  0001 C CNN
+	1    6100 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW9
+U 1 1 5AEDA2BD
+P 9900 3800
+F 0 "SW9" V 9854 3948 50  0000 L CNN
+F 1 "Eb" V 9945 3948 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 9900 4000 50  0001 C CNN
+F 3 "" H 9900 4000 50  0001 C CNN
+	1    9900 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW5
+U 1 1 5AEDA355
+P 9000 3800
+F 0 "SW5" V 8954 3948 50  0000 L CNN
+F 1 "Db" V 9045 3948 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 9000 4000 50  0001 C CNN
+F 3 "" H 9000 4000 50  0001 C CNN
+	1    9000 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW3
+U 1 1 5AEDA3DF
+P 8100 3800
+F 0 "SW3" V 8054 3948 50  0000 L CNN
+F 1 "Cb" V 8145 3948 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 8100 4000 50  0001 C CNN
+F 3 "" H 8100 4000 50  0001 C CNN
+	1    8100 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW4
+U 1 1 5AEDA463
+P 8100 4800
+F 0 "SW4" V 8054 4948 50  0000 L CNN
+F 1 "Ab" V 8145 4948 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_2.00u_PCB" H 8100 5000 50  0001 C CNN
+F 3 "" H 8100 5000 50  0001 C CNN
+	1    8100 4800
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW10
+U 1 1 5AEDA4F5
+P 9900 4800
+F 0 "SW10" V 9854 4948 50  0000 L CNN
+F 1 "Bb" V 9945 4948 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 9900 5000 50  0001 C CNN
+F 3 "" H 9900 5000 50  0001 C CNN
+	1    9900 4800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6300 2800 6300 1800
+Wire Wire Line
+	6300 1800 6300 700 
+Wire Wire Line
+	6300 700  2000 700 
+Connection ~ 6300 1800
+Wire Wire Line
+	5300 900  2150 900 
+Wire Wire Line
+	4200 2800 4200 1800
+Wire Wire Line
+	4200 1800 4200 1000
+Wire Wire Line
+	4200 1000 2250 1000
+Connection ~ 4200 1800
+Wire Wire Line
+	5300 900  5300 2800
+Wire Wire Line
+	5900 1600 5850 1600
+Wire Wire Line
+	5850 1400 3800 1400
+Wire Wire Line
+	3800 1400 3800 1500
+Wire Wire Line
+	5850 1400 5850 1600
+Wire Wire Line
+	5900 1800 5900 1750
+Wire Wire Line
+	5900 1750 3800 1750
+Wire Wire Line
+	3800 1750 3800 1800
+Wire Wire Line
+	5900 2000 5900 2150
+Wire Wire Line
+	5900 2150 3800 2150
+Wire Wire Line
+	3800 2150 3800 2050
+Wire Wire Line
+	5900 2600 5900 2400
+Wire Wire Line
+	5900 2400 4900 2400
+Wire Wire Line
+	3800 2400 3800 2600
+Wire Wire Line
+	4900 2400 4900 2600
+Connection ~ 4900 2400
+Wire Wire Line
+	4900 2400 3800 2400
+Wire Wire Line
+	5900 2800 5900 2850
+Wire Wire Line
+	5900 2850 4900 2850
+Wire Wire Line
+	3800 2850 3800 2800
+Wire Wire Line
+	4900 2850 4900 2800
+Connection ~ 4900 2850
+Wire Wire Line
+	4900 2850 3800 2850
+Wire Wire Line
+	5900 3000 5900 3150
+Wire Wire Line
+	5900 3150 4900 3150
+Wire Wire Line
+	3800 3150 3800 3100
+Wire Wire Line
+	4900 3000 4900 3150
+Connection ~ 4900 3150
+Wire Wire Line
+	4900 3150 3800 3150
+Wire Wire Line
+	5900 3900 5900 3700
+Wire Wire Line
+	5900 3700 4900 3700
+Wire Wire Line
+	3800 3700 3800 3800
+Wire Wire Line
+	4900 3700 4900 3900
+Connection ~ 4900 3700
+Wire Wire Line
+	4900 3700 3800 3700
+Wire Wire Line
+	5900 4300 5900 4500
+Wire Wire Line
+	5900 4500 4900 4500
+Wire Wire Line
+	3800 4500 3800 4300
+Wire Wire Line
+	4900 4300 4900 4500
+Connection ~ 4900 4500
+Wire Wire Line
+	4900 4500 3800 4500
+Wire Wire Line
+	3800 4100 3800 4050
+Wire Wire Line
+	3800 4050 4900 4050
+Wire Wire Line
+	5900 4050 5900 4100
+Wire Wire Line
+	4900 4050 4900 4100
+Connection ~ 4900 4050
+Wire Wire Line
+	4900 4050 5900 4050
+Wire Wire Line
+	3800 4700 5900 4700
+Wire Wire Line
+	5900 4700 5900 4900
+Wire Wire Line
+	3800 5300 3800 5350
+Wire Wire Line
+	3800 5500 5900 5500
+Wire Wire Line
+	5900 5500 5900 5300
+Wire Wire Line
+	5900 5100 5900 5050
+Wire Wire Line
+	5900 5050 3800 5050
+Wire Wire Line
+	3800 5050 3800 5100
+Wire Wire Line
+	3800 3100 3650 3100
+Wire Wire Line
+	3650 3100 3650 3450
+Wire Wire Line
+	3650 3800 3800 3800
+Connection ~ 3800 3100
+Wire Wire Line
+	3800 3100 3800 3000
+Connection ~ 3800 3800
+Wire Wire Line
+	3800 3800 3800 3900
+Wire Wire Line
+	3800 2800 3500 2800
+Wire Wire Line
+	3500 2800 3500 3150
+Wire Wire Line
+	3500 4100 3800 4100
+Connection ~ 3800 2800
+Connection ~ 3800 4100
+Wire Wire Line
+	3800 2600 3350 2600
+Wire Wire Line
+	3350 2600 3350 2700
+Wire Wire Line
+	3350 4300 3800 4300
+Connection ~ 3800 2600
+Connection ~ 3800 4300
+Wire Wire Line
+	3800 2050 3250 2050
+Wire Wire Line
+	3250 4850 3800 4850
+Connection ~ 3800 2050
+Wire Wire Line
+	3800 2050 3800 2000
+Wire Wire Line
+	3800 4850 3800 4700
+Wire Wire Line
+	3800 1800 3100 1800
+Wire Wire Line
+	3100 5100 3800 5100
+Connection ~ 3800 1800
+Wire Wire Line
+	3800 1500 2950 1500
+Wire Wire Line
+	2950 5350 3800 5350
+Connection ~ 3800 1500
+Wire Wire Line
+	3800 1500 3800 1600
+Connection ~ 3800 5350
+Wire Wire Line
+	3800 5350 3800 5500
+Wire Wire Line
+	2400 2700 3350 2700
+Connection ~ 3350 2700
+Wire Wire Line
+	3350 2700 3350 4300
+Wire Wire Line
+	2000 4200 2450 4200
+Wire Wire Line
+	2450 4200 2450 3150
+Wire Wire Line
+	2450 3150 3500 3150
+Connection ~ 3500 3150
+Wire Wire Line
+	3500 3150 3500 4100
+Wire Wire Line
+	2000 4300 2600 4300
+Wire Wire Line
+	2600 4300 2600 3450
+Wire Wire Line
+	2600 3450 3650 3450
+Connection ~ 3650 3450
+Wire Wire Line
+	3650 3450 3650 3800
+Wire Wire Line
+	10400 6400 10400 5150
+Wire Wire Line
+	10400 1300 9900 1300
+Wire Wire Line
+	9900 1300 9900 1400
+Wire Wire Line
+	2100 6300 9200 6300
+Wire Wire Line
+	9200 6300 9200 4050
+Wire Wire Line
+	9200 2100 9100 2100
+Wire Wire Line
+	9100 2100 9100 2200
+Wire Wire Line
+	2200 6200 8300 6200
+Wire Wire Line
+	8300 6200 8300 5100
+Wire Wire Line
+	8300 1300 8100 1300
+Wire Wire Line
+	8100 1300 8100 1400
+Wire Wire Line
+	2650 5800 6750 5800
+Wire Wire Line
+	6750 1800 7500 1800
+Wire Wire Line
+	2500 6000 6900 6000
+Wire Wire Line
+	8300 2150 8100 2150
+Wire Wire Line
+	8100 2150 8100 2200
+Connection ~ 8300 2150
+Wire Wire Line
+	8300 2150 8300 1300
+Wire Wire Line
+	8300 4050 8100 4050
+Wire Wire Line
+	8100 4050 8100 4000
+Connection ~ 8300 4050
+Wire Wire Line
+	8300 4050 8300 2150
+Wire Wire Line
+	8300 5100 8100 5100
+Wire Wire Line
+	8100 5100 8100 5000
+Connection ~ 8300 5100
+Wire Wire Line
+	8300 5100 8300 4050
+Wire Wire Line
+	9200 4050 9000 4050
+Wire Wire Line
+	9000 4050 9000 4000
+Connection ~ 9200 4050
+Wire Wire Line
+	9200 4050 9200 2100
+Wire Wire Line
+	10400 5150 9900 5150
+Wire Wire Line
+	9900 5150 9900 5000
+Connection ~ 10400 5150
+Wire Wire Line
+	10400 5150 10400 4100
+Wire Wire Line
+	10400 4100 9900 4100
+Wire Wire Line
+	9900 4100 9900 4000
+Connection ~ 10400 4100
+Wire Wire Line
+	10400 4100 10400 2100
+Wire Wire Line
+	10400 2100 9900 2100
+Wire Wire Line
+	9900 2100 9900 2200
+Connection ~ 10400 2100
+Wire Wire Line
+	10400 2100 10400 1300
+Wire Wire Line
+	9750 1800 9800 1800
+Wire Wire Line
+	7900 1800 7950 1800
+Wire Wire Line
+	7500 1800 7500 1900
+Wire Wire Line
+	7500 1900 9450 1900
+Wire Wire Line
+	9450 1900 9450 1800
+Connection ~ 7500 1800
+Wire Wire Line
+	7500 1800 7600 1800
+Wire Wire Line
+	4200 2800 4200 3900
+Connection ~ 4200 2800
+Wire Wire Line
+	4200 3900 4200 4100
+Connection ~ 4200 3900
+Connection ~ 3800 5100
+$Comp
+L device:LED_RGB D4
+U 1 1 5AED9DB1
+P 4000 5100
+F 0 "D4" H 4000 5597 50  0000 C CNN
+F 1 "LED_Ab" H 4000 5506 50  0000 C CNN
+F 2 "cherry_footprint:LED_smd_1214" H 4000 5050 50  0001 C CNN
+F 3 "~" H 4000 5050 50  0001 C CNN
+	1    4000 5100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 4850 3800 4900
+Connection ~ 3800 4850
+Wire Wire Line
+	4200 4100 4200 4300
+Connection ~ 4200 4100
+Wire Wire Line
+	4200 4300 4200 4900
+Connection ~ 4200 4300
+Wire Wire Line
+	4200 4900 4200 5100
+Connection ~ 4200 4900
+Wire Wire Line
+	4200 5100 4200 5300
+Connection ~ 4200 5100
+Wire Wire Line
+	5300 2800 5300 3900
+Connection ~ 5300 2800
+Wire Wire Line
+	5300 3900 5300 4100
+Connection ~ 5300 3900
+Wire Wire Line
+	5300 4100 5300 4300
+Connection ~ 5300 4100
+Wire Wire Line
+	6300 2800 6300 3900
+Connection ~ 6300 2800
+Wire Wire Line
+	6300 3900 6300 4100
+Connection ~ 6300 3900
+Wire Wire Line
+	6300 4100 6300 4300
+Connection ~ 6300 4100
+Wire Wire Line
+	6300 4300 6300 4900
+Connection ~ 6300 4300
+Wire Wire Line
+	6300 4900 6300 5100
+Connection ~ 6300 4900
+Wire Wire Line
+	6300 5100 6300 5300
+Connection ~ 6300 5100
+Wire Wire Line
+	2000 4600 2050 4600
+Wire Wire Line
+	2050 4600 2050 6400
+Wire Wire Line
+	2050 6400 10400 6400
+Wire Wire Line
+	2100 6300 2100 4700
+Wire Wire Line
+	2100 4700 2000 4700
+Wire Wire Line
+	2200 6200 2200 4800
+Wire Wire Line
+	2200 4800 2000 4800
+Wire Wire Line
+	6750 1800 6750 5800
+Wire Wire Line
+	6900 3100 7500 3100
+Wire Wire Line
+	6900 3100 6900 6000
+Wire Wire Line
+	7500 3100 7500 3000
+Wire Wire Line
+	7500 3000 8550 3000
+Wire Wire Line
+	8550 3000 8550 3100
+Wire Wire Line
+	8550 3100 8650 3100
+Connection ~ 7500 3100
+Wire Wire Line
+	7500 3100 7600 3100
+Wire Wire Line
+	8550 3000 9300 3000
+Wire Wire Line
+	9300 3000 9300 3100
+Wire Wire Line
+	9300 3100 9400 3100
+Connection ~ 8550 3000
+Wire Wire Line
+	9900 2600 9900 3100
+Wire Wire Line
+	9900 3100 9700 3100
+Wire Wire Line
+	9900 3600 9900 3100
+Connection ~ 9900 3100
+Wire Wire Line
+	9000 3600 9000 3100
+Wire Wire Line
+	9000 3100 8950 3100
+Wire Wire Line
+	9100 2600 9000 2600
+Wire Wire Line
+	9000 2600 9000 3100
+Connection ~ 9000 3100
+Wire Wire Line
+	8100 2600 8100 3100
+Wire Wire Line
+	8100 3100 7900 3100
+Wire Wire Line
+	8100 3100 8100 3600
+Connection ~ 8100 3100
+Wire Wire Line
+	9800 1800 9800 4600
+Wire Wire Line
+	9800 4600 9900 4600
+Connection ~ 9800 1800
+Wire Wire Line
+	9800 1800 9900 1800
+Wire Wire Line
+	7950 1800 7950 4600
+Wire Wire Line
+	7950 4600 8100 4600
+Connection ~ 7950 1800
+Wire Wire Line
+	7950 1800 8100 1800
+Wire Wire Line
+	2500 4400 2000 4400
+Wire Wire Line
+	2500 4400 2500 6000
+Wire Wire Line
+	2000 4500 2650 4500
+Wire Wire Line
+	2650 4500 2650 5800
+Wire Wire Line
+	2150 900  2150 1800
+Wire Wire Line
+	1850 1800 2150 1800
+Wire Wire Line
+	2000 2400 1850 2400
+Wire Wire Line
+	2000 700  2000 2400
+Wire Wire Line
+	3100 1800 3100 2100
+Wire Wire Line
+	2250 2300 1850 2300
+Wire Wire Line
+	2250 1000 2250 2300
+Wire Wire Line
+	2400 1900 1850 1900
+Wire Wire Line
+	2400 1900 2400 2700
+Wire Wire Line
+	3250 2050 3250 2200
+Wire Wire Line
+	1850 2200 3250 2200
+Connection ~ 3250 2200
+Wire Wire Line
+	3250 2200 3250 4850
+Wire Wire Line
+	2950 1500 2950 2000
+Wire Wire Line
+	1850 2100 3100 2100
+Connection ~ 3100 2100
+Wire Wire Line
+	3100 2100 3100 5100
+Wire Wire Line
+	1850 2000 2950 2000
+Connection ~ 2950 2000
+Wire Wire Line
+	2950 2000 2950 5350
+$EndSCHEMATC

@@ -1,0 +1,266 @@
+EESchema Schematic File Version 4
+LIBS:cherry_proto_circuit-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 5
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector:USB_C_Receptacle J2
+U 1 1 5B0F0620
+P 2100 3600
+F 0 "J2" H 2205 5167 50  0000 C CNN
+F 1 "USB_C_Receptacle" H 2205 5076 50  0000 C CNN
+F 2 "" H 2250 3600 50  0001 C CNN
+F 3 "http://www.usb.org/developers/docs/usb_31_033017.zip" H 2250 3600 50  0001 C CNN
+	1    2100 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR012
+U 1 1 5B0F06CB
+P 3100 5300
+F 0 "#PWR012" H 3100 5050 50  0001 C CNN
+F 1 "GND" H 3105 5127 50  0000 C CNN
+F 2 "" H 3100 5300 50  0001 C CNN
+F 3 "" H 3100 5300 50  0001 C CNN
+	1    3100 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR011
+U 1 1 5B0F06F7
+P 3100 1950
+F 0 "#PWR011" H 3100 1800 50  0001 C CNN
+F 1 "+5V" H 3115 2123 50  0000 C CNN
+F 2 "" H 3100 1950 50  0001 C CNN
+F 3 "" H 3100 1950 50  0001 C CNN
+	1    3100 1950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 5200 1800 5300
+Wire Wire Line
+	1800 5300 1900 5300
+Wire Wire Line
+	1900 5200 1900 5300
+Connection ~ 1900 5300
+Wire Wire Line
+	1900 5300 2000 5300
+Wire Wire Line
+	2000 5200 2000 5300
+Connection ~ 2000 5300
+Wire Wire Line
+	2000 5300 2100 5300
+Wire Wire Line
+	2100 5200 2100 5300
+Connection ~ 2100 5300
+Wire Wire Line
+	2100 5300 2200 5300
+Wire Wire Line
+	2200 5200 2200 5300
+Connection ~ 2200 5300
+Wire Wire Line
+	2200 5300 2900 5300
+Wire Wire Line
+	2700 2300 3100 2300
+Wire Wire Line
+	3100 2300 3100 2150
+Wire Wire Line
+	2700 2400 3100 2400
+Wire Wire Line
+	3100 2400 3100 2300
+Connection ~ 3100 2300
+Wire Wire Line
+	2700 2500 3100 2500
+Wire Wire Line
+	3100 2500 3100 2400
+Connection ~ 3100 2400
+Wire Wire Line
+	2700 2600 3100 2600
+Wire Wire Line
+	3100 2600 3100 2500
+Connection ~ 3100 2500
+NoConn ~ 2700 3600
+NoConn ~ 2700 3700
+NoConn ~ 2700 3900
+NoConn ~ 2700 4000
+NoConn ~ 2700 4200
+NoConn ~ 2700 4300
+NoConn ~ 2700 4500
+NoConn ~ 2700 4600
+NoConn ~ 2700 4800
+NoConn ~ 2700 4900
+Wire Wire Line
+	2850 3100 2700 3100
+$Comp
+L device:R R2
+U 1 1 5B0F18A3
+P 4000 2650
+F 0 "R2" H 4070 2696 50  0000 L CNN
+F 1 "5K" H 4070 2605 50  0000 L CNN
+F 2 "" V 3930 2650 50  0001 C CNN
+F 3 "" H 4000 2650 50  0001 C CNN
+	1    4000 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:R R5
+U 1 1 5B0F18E1
+P 4500 2650
+F 0 "R5" H 4570 2696 50  0000 L CNN
+F 1 "5K" H 4570 2605 50  0000 L CNN
+F 2 "" V 4430 2650 50  0001 C CNN
+F 3 "" H 4500 2650 50  0001 C CNN
+	1    4500 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:R R3
+U 1 1 5B0F190F
+P 4150 3950
+F 0 "R3" V 4150 3900 50  0000 C CNN
+F 1 "22" V 4050 3950 50  0000 C CNN
+F 2 "" V 4080 3950 50  0001 C CNN
+F 3 "" H 4150 3950 50  0001 C CNN
+	1    4150 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L device:R R4
+U 1 1 5B0F1954
+P 4150 4150
+F 0 "R4" V 4150 4100 50  0000 C CNN
+F 1 "22" V 4250 4150 50  0000 C CNN
+F 2 "" V 4080 4150 50  0001 C CNN
+F 3 "" H 4150 4150 50  0001 C CNN
+	1    4150 4150
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR013
+U 1 1 5B0F19C9
+P 4000 2900
+F 0 "#PWR013" H 4000 2650 50  0001 C CNN
+F 1 "GND" H 4005 2727 50  0000 C CNN
+F 2 "" H 4000 2900 50  0001 C CNN
+F 3 "" H 4000 2900 50  0001 C CNN
+	1    4000 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR014
+U 1 1 5B0F19E5
+P 4500 2900
+F 0 "#PWR014" H 4500 2650 50  0001 C CNN
+F 1 "GND" H 4505 2727 50  0000 C CNN
+F 2 "" H 4500 2900 50  0001 C CNN
+F 3 "" H 4500 2900 50  0001 C CNN
+	1    4500 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 2500 3700 2500
+Wire Wire Line
+	3700 2500 3700 2900
+Wire Wire Line
+	3700 2900 2700 2900
+Wire Wire Line
+	4500 2500 4500 2400
+Wire Wire Line
+	4500 2400 3600 2400
+Wire Wire Line
+	3600 2400 3600 2800
+Wire Wire Line
+	3600 2800 2700 2800
+Wire Wire Line
+	4000 2800 4000 2900
+Wire Wire Line
+	4500 2800 4500 2900
+Text HLabel 4750 3950 2    50   BiDi ~ 0
+USB_D-
+Text HLabel 4750 4150 2    50   BiDi ~ 0
+USB_D+
+Text HLabel 3700 2050 2    50   Output ~ 0
+BUS_5V
+Text HLabel 3550 5150 2    50   Output ~ 0
+BUS_GND
+Wire Wire Line
+	2900 5300 2900 5150
+Wire Wire Line
+	2900 5150 3550 5150
+Connection ~ 2900 5300
+Wire Wire Line
+	2900 5300 3100 5300
+Wire Wire Line
+	4300 4150 4750 4150
+Wire Wire Line
+	4300 3950 4750 3950
+Wire Wire Line
+	3100 2050 3700 2050
+Connection ~ 3100 2050
+Wire Wire Line
+	3100 2050 3100 1950
+Wire Wire Line
+	2850 3100 2850 3150
+Wire Wire Line
+	2850 3150 3650 3150
+Wire Wire Line
+	3650 3150 3650 3950
+Wire Wire Line
+	3100 2150 5050 2150
+Connection ~ 3100 2150
+Wire Wire Line
+	3100 2150 3100 2050
+Text GLabel 4400 3650 2    50   Input ~ 0
+ESD-protection-ch1
+Text GLabel 5050 2150 2    50   Input ~ 0
+ESD-protection-vcc
+Wire Wire Line
+	3650 3950 3850 3950
+Wire Wire Line
+	3550 4150 3850 4150
+Wire Wire Line
+	3850 3950 3850 3650
+Wire Wire Line
+	3850 3650 4400 3650
+Connection ~ 3850 3950
+Wire Wire Line
+	3850 3950 4000 3950
+Text GLabel 4400 4400 2    50   Input ~ 0
+ESD-protection-ch2
+Wire Wire Line
+	3850 4150 3850 4400
+Wire Wire Line
+	3850 4400 4400 4400
+Connection ~ 3850 4150
+Wire Wire Line
+	3850 4150 4000 4150
+Wire Wire Line
+	2700 3200 2850 3200
+Wire Wire Line
+	2850 3200 2850 3150
+Connection ~ 2850 3150
+Wire Wire Line
+	2700 3300 2850 3300
+Wire Wire Line
+	2700 3400 2850 3400
+Wire Wire Line
+	2850 3400 2850 3350
+Wire Wire Line
+	2850 3350 3550 3350
+Connection ~ 2850 3350
+Wire Wire Line
+	2850 3350 2850 3300
+Wire Wire Line
+	3550 3350 3550 4150
+$EndSCHEMATC

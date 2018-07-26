@@ -1,0 +1,589 @@
+EESchema Schematic File Version 4
+LIBS:cherry_breakout-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L device:D_ALT D2
+U 1 1 5AD6331D
+P 3250 2000
+F 0 "D2" H 3250 2100 50  0000 C CNN
+F 1 "D_ALT" H 3250 1900 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 3250 2000 50  0001 C CNN
+F 3 "" H 3250 2000 50  0001 C CNN
+	1    3250 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:LED_ARGB D1
+U 1 1 5AD63407
+P 3100 4300
+F 0 "D1" H 3100 4670 50  0000 C CNN
+F 1 "LED_ARGB" H 3100 3950 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 3100 4250 50  0001 C CNN
+F 3 "" H 3100 4250 50  0001 C CNN
+	1    3100 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J7
+U 1 1 5AD8B8B2
+P 6100 2200
+F 0 "J7" H 6180 2242 50  0000 L CNN
+F 1 "Row 1" H 6180 2151 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6100 2200 50  0001 C CNN
+F 3 "~" H 6100 2200 50  0001 C CNN
+	1    6100 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J8
+U 1 1 5AD8C313
+P 6100 3050
+F 0 "J8" H 6180 3092 50  0000 L CNN
+F 1 "Row 2" H 6180 3001 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6100 3050 50  0001 C CNN
+F 3 "~" H 6100 3050 50  0001 C CNN
+	1    6100 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J1
+U 1 1 5AD8C378
+P 3050 1050
+F 0 "J1" V 3016 962 50  0000 R CNN
+F 1 "Col1" V 2925 962 50  0000 R CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 3050 1050 50  0001 C CNN
+F 3 "~" H 3050 1050 50  0001 C CNN
+	1    3050 1050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector:Conn_01x01 J3
+U 1 1 5AD8C41E
+P 4150 1050
+F 0 "J3" V 4116 962 50  0000 R CNN
+F 1 "Col2" V 4025 962 50  0000 R CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 4150 1050 50  0001 C CNN
+F 3 "~" H 4150 1050 50  0001 C CNN
+	1    4150 1050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector:Conn_01x01 J5
+U 1 1 5AD8C4A1
+P 4950 1050
+F 0 "J5" V 4916 962 50  0000 R CNN
+F 1 "Col3" V 4825 962 50  0000 R CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 4950 1050 50  0001 C CNN
+F 3 "~" H 4950 1050 50  0001 C CNN
+	1    4950 1050
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4950 1250 4850 1250
+Wire Wire Line
+	4850 1250 4850 2250
+Wire Wire Line
+	4150 1250 4150 1550
+Wire Wire Line
+	4150 1250 4050 1250
+Wire Wire Line
+	4050 1250 4050 2250
+Wire Wire Line
+	4050 2250 4150 2250
+Connection ~ 4150 1250
+Wire Wire Line
+	2950 1250 2950 2250
+Wire Wire Line
+	4950 1250 4950 1550
+Connection ~ 4950 1250
+Wire Wire Line
+	4850 2250 4950 2250
+Wire Wire Line
+	4950 2250 4950 2400
+Wire Wire Line
+	4150 2250 4150 2400
+Wire Wire Line
+	3050 1250 3050 1550
+Wire Wire Line
+	3050 1250 2950 1250
+Connection ~ 3050 1250
+Wire Wire Line
+	2950 2250 3050 2250
+Wire Wire Line
+	3050 2250 3050 2400
+$Comp
+L device:D_ALT D4
+U 1 1 5AD8F225
+P 3250 2850
+F 0 "D4" H 3250 2950 50  0000 C CNN
+F 1 "D_ALT" H 3250 2750 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 3250 2850 50  0001 C CNN
+F 3 "" H 3250 2850 50  0001 C CNN
+	1    3250 2850
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D_ALT D8
+U 1 1 5AD8F277
+P 4350 2850
+F 0 "D8" H 4350 2950 50  0000 C CNN
+F 1 "D_ALT" H 4350 2750 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 4350 2850 50  0001 C CNN
+F 3 "" H 4350 2850 50  0001 C CNN
+	1    4350 2850
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D_ALT D7
+U 1 1 5AD8F2CB
+P 4350 2000
+F 0 "D7" H 4350 2100 50  0000 C CNN
+F 1 "D_ALT" H 4350 1900 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 4350 2000 50  0001 C CNN
+F 3 "" H 4350 2000 50  0001 C CNN
+	1    4350 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D_ALT D9
+U 1 1 5AD8F31D
+P 5150 2000
+F 0 "D9" H 5150 2100 50  0000 C CNN
+F 1 "D_ALT" H 5150 1900 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 5150 2000 50  0001 C CNN
+F 3 "" H 5150 2000 50  0001 C CNN
+	1    5150 2000
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D_ALT D10
+U 1 1 5AD8F36B
+P 5150 2850
+F 0 "D10" H 5150 2950 50  0000 C CNN
+F 1 "D_ALT" H 5150 2750 50  0000 C CNN
+F 2 "Diodes_SMD:D_SOD-123" H 5150 2850 50  0001 C CNN
+F 3 "" H 5150 2850 50  0001 C CNN
+	1    5150 2850
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3050 1950 3050 2000
+Wire Wire Line
+	3050 2000 3100 2000
+Wire Wire Line
+	3050 2800 3050 2850
+Wire Wire Line
+	3050 2850 3100 2850
+Wire Wire Line
+	4150 1950 4150 2000
+Wire Wire Line
+	4150 2000 4200 2000
+Wire Wire Line
+	4950 1950 4950 2000
+Wire Wire Line
+	4950 2000 5000 2000
+Wire Wire Line
+	4150 2800 4150 2850
+Wire Wire Line
+	4150 2850 4200 2850
+Wire Wire Line
+	4950 2800 4950 2850
+Wire Wire Line
+	4950 2850 5000 2850
+Wire Wire Line
+	5900 2200 5300 2200
+Wire Wire Line
+	3400 2200 3400 2000
+Wire Wire Line
+	4500 2000 4500 2200
+Connection ~ 4500 2200
+Wire Wire Line
+	4500 2200 3400 2200
+Wire Wire Line
+	5300 2000 5300 2200
+Connection ~ 5300 2200
+Wire Wire Line
+	5300 2200 4500 2200
+Wire Wire Line
+	5900 3050 5300 3050
+Wire Wire Line
+	3400 3050 3400 2850
+Wire Wire Line
+	4500 2850 4500 3050
+Connection ~ 4500 3050
+Wire Wire Line
+	4500 3050 3400 3050
+Wire Wire Line
+	5300 2850 5300 3050
+Connection ~ 5300 3050
+Wire Wire Line
+	5300 3050 4500 3050
+$Comp
+L device:LED_ARGB D5
+U 1 1 5AD93335
+P 4300 4300
+F 0 "D5" H 4300 4670 50  0000 C CNN
+F 1 "LED_ARGB" H 4300 3950 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 4300 4250 50  0001 C CNN
+F 3 "" H 4300 4250 50  0001 C CNN
+	1    4300 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_ARGB D11
+U 1 1 5AD933DE
+P 5500 4300
+F 0 "D11" H 5500 4670 50  0000 C CNN
+F 1 "LED_ARGB" H 5500 3950 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 5500 4250 50  0001 C CNN
+F 3 "" H 5500 4250 50  0001 C CNN
+	1    5500 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_ARGB D3
+U 1 1 5AD9355C
+P 3100 6150
+F 0 "D3" H 3100 6520 50  0000 C CNN
+F 1 "LED_ARGB" H 3100 5800 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 3100 6100 50  0001 C CNN
+F 3 "" H 3100 6100 50  0001 C CNN
+	1    3100 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_ARGB D6
+U 1 1 5AD935D6
+P 4300 6150
+F 0 "D6" H 4300 6520 50  0000 C CNN
+F 1 "LED_ARGB" H 4300 5800 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 4300 6100 50  0001 C CNN
+F 3 "" H 4300 6100 50  0001 C CNN
+	1    4300 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:LED_ARGB D12
+U 1 1 5AD93642
+P 5500 6150
+F 0 "D12" H 5500 6520 50  0000 C CNN
+F 1 "LED_ARGB" H 5500 5800 50  0000 C CNN
+F 2 "cherry_footprint:Led_SMD_0606" H 5500 6100 50  0001 C CNN
+F 3 "" H 5500 6100 50  0001 C CNN
+	1    5500 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J2
+U 1 1 5AD93D5E
+P 3300 3550
+F 0 "J2" V 3266 3462 50  0000 R CNN
+F 1 "LCol1" V 3175 3462 50  0000 R CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 3300 3550 50  0001 C CNN
+F 3 "~" H 3300 3550 50  0001 C CNN
+	1    3300 3550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector:Conn_01x01 J4
+U 1 1 5AD93EB6
+P 4500 3550
+F 0 "J4" V 4466 3462 50  0000 R CNN
+F 1 "LCol2" V 4375 3462 50  0000 R CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 4500 3550 50  0001 C CNN
+F 3 "~" H 4500 3550 50  0001 C CNN
+	1    4500 3550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector:Conn_01x01 J6
+U 1 1 5AD93F28
+P 5700 3550
+F 0 "J6" V 5666 3462 50  0000 R CNN
+F 1 "LCol3" V 5575 3462 50  0000 R CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 5700 3550 50  0001 C CNN
+F 3 "~" H 5700 3550 50  0001 C CNN
+	1    5700 3550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector:Conn_01x01 J9
+U 1 1 5AD93F9A
+P 6350 4900
+F 0 "J9" H 6429 4942 50  0000 L CNN
+F 1 "LRow1B" H 6429 4851 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6350 4900 50  0001 C CNN
+F 3 "~" H 6350 4900 50  0001 C CNN
+	1    6350 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J10
+U 1 1 5AD94090
+P 6350 5100
+F 0 "J10" H 6429 5142 50  0000 L CNN
+F 1 "LRow1G" H 6429 5051 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6350 5100 50  0001 C CNN
+F 3 "~" H 6350 5100 50  0001 C CNN
+	1    6350 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J11
+U 1 1 5AD940DC
+P 6350 5300
+F 0 "J11" H 6429 5342 50  0000 L CNN
+F 1 "LRow1R" H 6429 5251 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6350 5300 50  0001 C CNN
+F 3 "~" H 6350 5300 50  0001 C CNN
+	1    6350 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J12
+U 1 1 5AD94132
+P 6350 6700
+F 0 "J12" H 6429 6742 50  0000 L CNN
+F 1 "LRow2B" H 6429 6651 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6350 6700 50  0001 C CNN
+F 3 "~" H 6350 6700 50  0001 C CNN
+	1    6350 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J13
+U 1 1 5AD941A2
+P 6350 6900
+F 0 "J13" H 6429 6942 50  0000 L CNN
+F 1 "LRow2G" H 6429 6851 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6350 6900 50  0001 C CNN
+F 3 "~" H 6350 6900 50  0001 C CNN
+	1    6350 6900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01 J14
+U 1 1 5AD941FA
+P 6350 7100
+F 0 "J14" H 6429 7142 50  0000 L CNN
+F 1 "LRow2R" H 6429 7051 50  0000 L CNN
+F 2 "cherry_footprint:Connector_Via_1.5mm" H 6350 7100 50  0001 C CNN
+F 3 "~" H 6350 7100 50  0001 C CNN
+	1    6350 7100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3300 3750 3300 4300
+Wire Wire Line
+	3300 4300 3300 6150
+Connection ~ 3300 4300
+Wire Wire Line
+	4500 3750 4500 4300
+Wire Wire Line
+	4500 4300 4500 6150
+Connection ~ 4500 4300
+Wire Wire Line
+	5700 3750 5700 4300
+Wire Wire Line
+	5700 4300 5700 6150
+Connection ~ 5700 4300
+Wire Wire Line
+	6150 4900 5150 4900
+Wire Wire Line
+	5150 4900 5150 4500
+Wire Wire Line
+	5150 4500 5300 4500
+Connection ~ 5150 4900
+Wire Wire Line
+	3900 4500 4100 4500
+Wire Wire Line
+	2700 4900 2700 4500
+Wire Wire Line
+	2700 4500 2900 4500
+Wire Wire Line
+	2700 4900 3900 4900
+Wire Wire Line
+	3900 4500 3900 4900
+Connection ~ 3900 4900
+Wire Wire Line
+	3900 4900 5150 4900
+Wire Wire Line
+	6150 5100 5050 5100
+Wire Wire Line
+	5050 5100 5050 4300
+Wire Wire Line
+	5050 4300 5300 4300
+Wire Wire Line
+	5050 5100 3800 5100
+Wire Wire Line
+	3800 5100 3800 4300
+Wire Wire Line
+	3800 4300 4100 4300
+Connection ~ 5050 5100
+Wire Wire Line
+	3800 5100 2600 5100
+Wire Wire Line
+	2600 5100 2600 4300
+Wire Wire Line
+	2600 4300 2900 4300
+Connection ~ 3800 5100
+Wire Wire Line
+	6150 5300 4950 5300
+Wire Wire Line
+	4950 5300 4950 4100
+Wire Wire Line
+	4950 4100 5300 4100
+Wire Wire Line
+	4950 5300 3700 5300
+Wire Wire Line
+	3700 5300 3700 4100
+Connection ~ 4950 5300
+Wire Wire Line
+	4100 4100 3700 4100
+Wire Wire Line
+	3700 5300 2500 5300
+Wire Wire Line
+	2500 5300 2500 4100
+Wire Wire Line
+	2500 4100 2900 4100
+Connection ~ 3700 5300
+Wire Wire Line
+	6150 6700 5150 6700
+Wire Wire Line
+	5150 6700 5150 6350
+Wire Wire Line
+	5150 6350 5300 6350
+Wire Wire Line
+	6150 6900 5050 6900
+Wire Wire Line
+	5050 6900 5050 6150
+Wire Wire Line
+	5300 6150 5050 6150
+Wire Wire Line
+	6150 7100 4950 7100
+Wire Wire Line
+	4950 7100 4950 5950
+Wire Wire Line
+	4950 5950 5300 5950
+Wire Wire Line
+	5150 6700 4000 6700
+Wire Wire Line
+	4000 6700 4000 6350
+Wire Wire Line
+	4000 6350 4100 6350
+Connection ~ 5150 6700
+Wire Wire Line
+	5050 6900 3900 6900
+Wire Wire Line
+	3900 6900 3900 6150
+Wire Wire Line
+	3900 6150 4100 6150
+Connection ~ 5050 6900
+Wire Wire Line
+	4950 7100 3800 7100
+Wire Wire Line
+	3800 7100 3800 5950
+Wire Wire Line
+	3800 5950 4100 5950
+Connection ~ 4950 7100
+Wire Wire Line
+	4000 6700 2800 6700
+Wire Wire Line
+	2800 6700 2800 6350
+Wire Wire Line
+	2800 6350 2900 6350
+Connection ~ 4000 6700
+Wire Wire Line
+	3900 6900 2700 6900
+Wire Wire Line
+	2700 6900 2700 6150
+Wire Wire Line
+	2700 6150 2900 6150
+Connection ~ 3900 6900
+Wire Wire Line
+	3800 7100 2600 7100
+Wire Wire Line
+	2600 7100 2600 5950
+Wire Wire Line
+	2600 5950 2900 5950
+Connection ~ 3800 7100
+$Comp
+L Switch:SW_Push SW1
+U 1 1 5AD99112
+P 3050 1750
+F 0 "SW1" V 3004 1898 50  0000 L CNN
+F 1 "SW11" V 3095 1898 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 3050 1950 50  0001 C CNN
+F 3 "" H 3050 1950 50  0001 C CNN
+	1    3050 1750
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW3
+U 1 1 5AD992D2
+P 4150 1750
+F 0 "SW3" V 4104 1898 50  0000 L CNN
+F 1 "SW12" V 4195 1898 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 4150 1950 50  0001 C CNN
+F 3 "" H 4150 1950 50  0001 C CNN
+	1    4150 1750
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW5
+U 1 1 5AD99342
+P 4950 1750
+F 0 "SW5" V 4904 1898 50  0000 L CNN
+F 1 "SW13" V 4995 1898 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 4950 1950 50  0001 C CNN
+F 3 "" H 4950 1950 50  0001 C CNN
+	1    4950 1750
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW2
+U 1 1 5AD993A8
+P 3050 2600
+F 0 "SW2" V 3004 2748 50  0000 L CNN
+F 1 "SW21" V 3095 2748 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 3050 2800 50  0001 C CNN
+F 3 "" H 3050 2800 50  0001 C CNN
+	1    3050 2600
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW4
+U 1 1 5AD99444
+P 4150 2600
+F 0 "SW4" V 4104 2748 50  0000 L CNN
+F 1 "SW22" V 4195 2748 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 4150 2800 50  0001 C CNN
+F 3 "" H 4150 2800 50  0001 C CNN
+	1    4150 2600
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW6
+U 1 1 5AD994C0
+P 4950 2600
+F 0 "SW6" V 4904 2748 50  0000 L CNN
+F 1 "SW23" V 4995 2748 50  0000 L CNN
+F 2 "Buttons_Switches_Keyboard:SW_Cherry_MX1A_1.00u_Plate" H 4950 2800 50  0001 C CNN
+F 3 "" H 4950 2800 50  0001 C CNN
+	1    4950 2600
+	0    1    1    0   
+$EndComp
+$EndSCHEMATC

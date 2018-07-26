@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name cherry_footprint)(type KiCad)(uri /home/qwattash/git/keyboard/tester/kicad/cherry_footprint.pretty)(options "")(descr ""))
+  (lib (name Buttons_Switches_Keyboard)(type KiCad)(uri /home/qwattash/git/keyboard/tester/kicad/Buttons_Switches_Keyboard.pretty)(options "")(descr ""))
+)
