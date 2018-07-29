@@ -1,0 +1,8 @@
+[submodule "fw/arduino-cmake"]
+	path = fw/arduino-cmake
+	url = https://github.com/arduino-cmake/arduino-cmake.git
+	branch = master
+[submodule "fw/lufa"]
+	path = fw/lufa
+	url = https://github.com/abcminiuser/lufa.git
+	branch = master
