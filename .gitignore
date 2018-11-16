@@ -30,3 +30,13 @@ sym-lib-table
 
 # emacs autosaves
 \#*
+
+# LUFA build data
+fw/KeyboardTester.bin
+fw/KeyboardTester.eep
+fw/KeyboardTester.elf
+fw/KeyboardTester.hex
+fw/KeyboardTester.lss
+fw/KeyboardTester.map
+fw/KeyboardTester.sym
+fw/obj/
