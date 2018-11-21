@@ -15,7 +15,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L custom_library:IS31FL3733 U3
+L cherry_proto_circuit-rescue:IS31FL3733-custom_library U3
 U 1 1 5B190D4F
 P 3600 5350
 F 0 "U3" H 4600 6450 60  0000 L CNN

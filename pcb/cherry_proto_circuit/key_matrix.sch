@@ -179,7 +179,7 @@ Wire Wire Line
 Wire Wire Line
 	6900 2150 6900 2050
 Wire Wire Line
-	1900 2300 3400 2300
+	1900 2300 2550 2300
 Wire Wire Line
 	6400 2300 6400 2150
 Wire Wire Line
@@ -188,7 +188,7 @@ Connection ~ 3400 2300
 Wire Wire Line
 	3400 2300 6400 2300
 Wire Wire Line
-	1900 3650 3350 3650
+	1900 3650 2550 3650
 Wire Wire Line
 	6400 3650 6400 3350
 Wire Wire Line
@@ -205,4 +205,62 @@ Wire Wire Line
 Connection ~ 3350 3650
 Wire Wire Line
 	3350 3650 4800 3650
+$Comp
+L device:R R?
+U 1 1 5BEF4B48
+P 2550 2550
+F 0 "R?" H 2620 2596 50  0000 L CNN
+F 1 "47K" H 2620 2505 50  0000 L CNN
+F 2 "" V 2480 2550 50  0001 C CNN
+F 3 "" H 2550 2550 50  0001 C CNN
+	1    2550 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:R R?
+U 1 1 5BEF4BB2
+P 2550 3900
+F 0 "R?" H 2620 3946 50  0000 L CNN
+F 1 "47K" H 2620 3855 50  0000 L CNN
+F 2 "" V 2480 3900 50  0001 C CNN
+F 3 "" H 2550 3900 50  0001 C CNN
+	1    2550 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 2300 2550 2400
+Connection ~ 2550 2300
+Wire Wire Line
+	2550 2300 3400 2300
+Wire Wire Line
+	2550 2700 2550 2800
+Wire Wire Line
+	2550 3650 2550 3750
+Connection ~ 2550 3650
+Wire Wire Line
+	2550 3650 3350 3650
+Wire Wire Line
+	2550 4050 2550 4150
+$Comp
+L power:GND #PWR?
+U 1 1 5BF4F563
+P 2550 4150
+F 0 "#PWR?" H 2550 3900 50  0001 C CNN
+F 1 "GND" H 2555 3977 50  0000 C CNN
+F 2 "" H 2550 4150 50  0001 C CNN
+F 3 "" H 2550 4150 50  0001 C CNN
+	1    2550 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5BF4F58D
+P 2550 2800
+F 0 "#PWR?" H 2550 2550 50  0001 C CNN
+F 1 "GND" H 2555 2627 50  0000 C CNN
+F 2 "" H 2550 2800 50  0001 C CNN
+F 3 "" H 2550 2800 50  0001 C CNN
+	1    2550 2800
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
