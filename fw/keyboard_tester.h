@@ -36,6 +36,8 @@
 #ifndef _KEYBOARDTESTER_H_
 #define _KEYBOARDTESTER_H_
 
+#include <stdio.h>
+
 /** 
  * LED mask for the library LED driver, to indicate that the
  * USB interface is not ready.
@@ -60,9 +62,21 @@
  */
 #define LEDMASK_USB_ERROR        (LEDS_LED1 | LEDS_LED2)
 
+/**
+ * Interval in ms between each keyboard matrix scan
+ */
+#define KEYBOARD_SCAN_INTERVAL_MS 5
+
+/**
+ * Number of ticks for ms of TIMER 1 with clk/64 prescaler
+ */
+#define TIMER1_TICKS 125
+
 void EVENT_USB_Device_Connect(void);
 void EVENT_USB_Device_Disconnect(void);
 void EVENT_USB_Device_ConfigurationChanged(void);
 void EVENT_USB_Device_ControlRequest(void);
+
+extern FILE serialStream;
 
 #endif

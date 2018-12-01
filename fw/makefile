@@ -18,11 +18,18 @@ F_CPU        = 8000000
 F_USB        = $(F_CPU)
 OPTIMIZATION = s
 TARGET       = KeyboardTester
-SRC          = keyboard_tester.c descriptors.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) $(LUFA_SRC_PLATFORM)
+SRC          = keyboard_tester.c descriptors.c matrix.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) $(LUFA_SRC_PLATFORM)
 LUFA_PATH    = ./lufa/LUFA
 CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -Iconfig
 LD_FLAGS     =
 
+# avrdude programming options
+AVRDUDE_PROGRAMMER = avr109
+AVRDUDE_PORT ?= /dev/ttyACM3
+AVRDUDE_LFUSE = 0xff
+AVRDUDE_HFUSE = 0xd8
+AVRDUDE_EFUSE = 0xcb
+AVRDUDE_LOCK = 0xef
 # Default target
 all:
 

@@ -34,9 +34,13 @@
 
 #include "descriptors.h"
 #include "keyboard_tester.h"
+#include "matrix.h"
 
 static void setupHardware(void);
-static void processSerial(void);
+static void initKeyboardScan(void);
+static void deinitKeyboardScan(void);
+static void startKeyboardScan(void);
+static void stopKeyboardScan(void);
 
 /** 
  * LUFA CDC Class driver interface configuration and state information.
@@ -70,9 +74,10 @@ static USB_ClassInfo_CDC_Device_t VirtualSerial_CDC_Interface = {
  * so that the virtual CDC COM port can be
  * used like any regular character stream in the C APIs.
  */
-static FILE USBSerialStream;
-static const char *hello = "Hello world!";
+FILE serialStream;
 static bool hostConnected = false;
+
+static char banner[] = "Welcome to the KeyboardTester board DEBUG serial\r\n";
 
 /**
  * Initialize the hardware
@@ -87,6 +92,13 @@ setupHardware()
 	/* Disable clock division */
 	clock_prescale_set(clock_div_1);
 
+	/* Set port F mode to general purpose I/O
+	 * output pin: 0,1,4 -- no pullup
+	 * input pin: 5,6
+	 */
+	PORTF = 0;
+	DDRF = (1 << DDF0) | (1 << DDF1) | (1 << DDF4);
+
 	LEDs_Init();
 	/* Hardware Initialization */
 	USB_Init(USB_DEVICE_OPT_FULLSPEED | USB_OPT_AUTO_PLL);
@@ -94,29 +106,111 @@ setupHardware()
 	hostConnected = false;
 }
 
-static void
-processSerial()
+/* 
+ * Register interrupt handler for OC1A interrupt, which will be
+ * triggered by the timer.
+ */
+ISR(TIMER1_COMPA_vect)
 {
-	// Main loop operations on the serial device
-	if (hostConnected)
-		fputs(hello, &USBSerialStream);
+	if (hostConnected) {
+		matrixScan();
+	}
+}
+
+/**
+ * Initialize keyboard matrix scan timer
+ */
+static void
+initKeyboardScan()
+{
+	/* enable clock to timer 1 */
+	PRR0 &= ~(1 << PRTIM1);
+
+	TCCR1A = 0; // reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
+	TCCR1B = 0; // reset control register B
+	
+	TIFR1 = 0; // clear timer 1 interrupt flag register
+	TIMSK1 = 0; // clear interrupt mask for timer 1
+
+	matrixReset();
+}
+
+/**
+ * Shutdown keyboard matrix scan timer
+ */
+static void
+deinitKeyboardScan()
+{
+	TIFR1 = 0; // clear timer 1 interrupt flag register
+	TIMSK1 = 0; // clear interrupt mask for timer 1
+
+	TCCR1A = 0; // reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
+	TCCR1B = 0; // reset control register B
+
+	/* disable clock to timer 1 */
+	PRR0 |= (1 << PRTIM1);
+}
+
+/**
+ * Setup timer interrupt to periodically scan the keyboard matrix
+ * MUST run with interrupts disabled.
+ */
+static void
+startKeyboardScan()
+{
+	/* 
+	 * select operation mode for timer 1
+	 * we use CTC (Clear Timer on Compare match) WGM (waveform generation mode),
+	 * waveform function generator OC1{A,B,C} outputs are disconnected
+	 * we use the prescaler clock source with clk/64 division
+	 * we use channel A for compare and trigger an interrupt on match
+	 *
+	 * TCCR1A = 0;
+	 * TCCR1B = 0;
+	 */
+
+	/* set output compare registers */
+	OCR1A = KEYBOARD_SCAN_INTERVAL_MS * TIMER1_TICKS;
+	
+	TIFR1 |= (1 << OCF1A); // enable OCF1A OC1A interrupt
+	TIMSK1 |= (1 << OCIE1A); // unmask OC1A interrupt
+
+	/* WGM1[3:2] select CTC */
+	TCCR1B |= (1 << WGM12) | (0 << WGM13);
+	/* Select clock source and start the timer, clk/64 prescaler */
+	TCCR1B |= (0 << CS12) | (1 << CS11) | (1 << CS10);
+}
+
+static void
+stopKeyboardScan()
+{
+	/* Mask timer interrupt */
+	TIMSK1 &= ~(1 << OCIE1A);
+	/* Clear clock source and stop timer */
+	TCCR1B &= ~((1 << CS12) | (1 << CS11) | (1 << CS10));
 }
 
 int
 main(void)
 {
+	/* disable interrupts before anything else */
+	cli();
+
 	setupHardware();
 	/* 
 	 * Create a regular character stream for the interface so that
 	 * it can be used with the stdio.h functions
 	 */
-	CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &USBSerialStream);
+	CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &serialStream);
 	/* Shutdown leds */
-	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
-	GlobalInterruptEnable();
+	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);	
+	initKeyboardScan();
+	startKeyboardScan();
+
+	/* enable interrupts */
+	sei();
 
 	while (true) {
-		processSerial();
 		/*
 		 * Must throw away unused bytes from the host,
 		 * or it will lock up while waiting for the device
@@ -174,4 +268,6 @@ void EVENT_CDC_Device_ControLineStateChanged(
 	hostConnected = (
 		CDCInterfaceInfo->State.ControlLineStates.HostToDevice &
 		CDC_CONTROL_LINE_OUT_DTR) != 0;
+	if (hostConnected)
+		fputs(banner, &serialStream);
 }
