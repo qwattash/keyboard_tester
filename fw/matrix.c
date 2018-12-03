@@ -67,7 +67,7 @@ static void
 matrixKeyPress(int row, int column)
 {
 	if (BITSET_GET(lastKeystate, RC2IDX(row, column)) == 0)
-		fprintf(&serialStream, "Button [%d, %d] pressed\r\n", row, column);
+		DEBUG("Button [%d, %d] pressed\r\n", row, column);
 	BITSET_SET(lastKeystate, RC2IDX(row, column));
 }
 
@@ -75,7 +75,7 @@ static void
 matrixKeyRelease(int row, int column)
 {
 	if (BITSET_GET(lastKeystate, RC2IDX(row, column)) == 1)
-		fprintf(&serialStream, "Button [%d, %d] released\r\n", row, column);
+		DEBUG("Button [%d, %d] released\r\n", row, column);
 	BITSET_CLEAR(lastKeystate, RC2IDX(row, column));
 }
 
@@ -126,8 +126,8 @@ matrixFillKeyboardReport(USB_KeyboardReport_Data_t *keyboardReport)
 		// scanCode = layoutFetchScanCode(IDX2R(idx), IDX2C(idx));
 		scanCode = scanCodes[idx];
 		if (nextKeycode == 6) {
-			fprintf(&serialStream,
-				"Error: Key rollover - too many keys pressed\r\n");
+			DEBUG("Error: Key rollover - too many keys pressed %d\r\n",
+			      nextKeycode);
 			break;
 		}
 		keyboardReport->KeyCode[nextKeycode++] = scanCode;

@@ -100,7 +100,7 @@ static USB_ClassInfo_HID_Device_t Keyboard_HID_Interface = {
  * used like any regular character stream in the C APIs.
  */
 FILE serialStream;
-static bool hostConnected = false;
+bool hostConnected = false;
 
 static char banner[] = "Welcome to the KeyboardTester board DEBUG serial\r\n";
 
@@ -335,13 +335,12 @@ bool CALLBACK_HID_Device_CreateHIDReport(
 {
 	USB_KeyboardReport_Data_t *kbdReport = (USB_KeyboardReport_Data_t *)reportData;
 
-	/* if (reportType != HID_REPORT_ITEM_In) { */
-	/* 	*reportSize = 0; */
-	/* 	fprintf(&serialStream, */
-	/* 		"Error: Requested report type %x is not supported\r\n", */
-	/* 		reportType); */
-	/* 	return false; */
-	/* } */
+	if (reportType != HID_REPORT_ITEM_In) {
+		*reportSize = 0;
+		DEBUG("Error: Requested report type %x is not supported\r\n",
+		      reportType);
+		return false;
+	}
 
 	matrixFillKeyboardReport(kbdReport);
 	*reportSize = sizeof(USB_KeyboardReport_Data_t);
@@ -367,8 +366,7 @@ void CALLBACK_HID_Device_ProcessHIDReport(
 	const uint16_t reportSize)
 {
 	if (reportType != HID_REPORT_ITEM_Out) {
-		fprintf(&serialStream,
-			"Error: Received report type %x is not supported\r\n",
-			reportType);
+		DEBUG("Error: Received report type %x is not supported\r\n",
+		      reportType);
 	}
 }

@@ -78,5 +78,11 @@ void EVENT_USB_Device_ConfigurationChanged(void);
 void EVENT_USB_Device_ControlRequest(void);
 
 extern FILE serialStream;
+extern bool hostConnected;
+
+#define DEBUG(fmt, args...) do {				\
+		if (hostConnected)				\
+			fprintf(&serialStream, fmt, args);	\
+	} while (0)
 
 #endif
