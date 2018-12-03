@@ -23,6 +23,8 @@
 #ifndef _MATRIX_H_
 #define _MATRIX_H_
 
+#include <LUFA/Drivers/USB/USB.h>
+
 /**
  * Number of keyboard columns
  */
@@ -54,6 +56,6 @@ void matrixReset(void);
  * Fill the given keyboard report with the last keys reported by
  * the scan loop.
  */
-bool matrixFillKeyboardReport(void);
+bool matrixFillKeyboardReport(USB_KeyboardReport_Data_t *HIDReport);
 
 #endif /* _MATRIX_H_ */

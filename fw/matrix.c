@@ -71,10 +71,18 @@ matrixKeyPress(int row, int column)
 	BITSET_SET(lastKeystate, RC2IDX(row, column));
 }
 
+static void
+matrixKeyRelease(int row, int column)
+{
+	if (BITSET_GET(lastKeystate, RC2IDX(row, column)) == 1)
+		fprintf(&serialStream, "Button [%d, %d] released\r\n", row, column);
+	BITSET_CLEAR(lastKeystate, RC2IDX(row, column));
+}
+
 void
 matrixReset()
 {
-	BITSET_CLEAR(lastKeystate);
+	BITSET_CLEAR_ALL(lastKeystate);
 	for (int col = 0; col < KEYBOARD_COLUMNS; col++)
 		matrixClearColumn(col);
 }
@@ -89,13 +97,24 @@ matrixScan()
 		for (int row = 0; row < KEYBOARD_ROWS; row++) {
 			if (matrixFetchRow(row))
 				matrixKeyPress(row, col);
+			else
+				matrixKeyRelease(row, col);
 		}
 		matrixClearColumn(col);
 	}
 }
 
+static uint8_t scanCodes[] = {
+	HID_KEYBOARD_SC_A,
+	HID_KEYBOARD_SC_B,
+	HID_KEYBOARD_SC_C,
+	HID_KEYBOARD_SC_D,
+	HID_KEYBOARD_SC_E,
+	HID_KEYBOARD_SC_F
+};
+
 bool
-matrixFillKeyboardReport()
+matrixFillKeyboardReport(USB_KeyboardReport_Data_t *keyboardReport)
 {
 	int idx, value;
 	uint8_t scanCode;
@@ -105,11 +124,14 @@ matrixFillKeyboardReport()
 		if (!value)
 			continue;
 		// scanCode = layoutFetchScanCode(IDX2R(idx), IDX2C(idx));
-		// keyboardReport->KeyCode[nextKeycode++] = scanCode;
-		/* if (nextKeycode == MAX_REPORT_KEYCODES) */
-		/* 	break; */
+		scanCode = scanCodes[idx];
+		if (nextKeycode == 6) {
+			fprintf(&serialStream,
+				"Error: Key rollover - too many keys pressed\r\n");
+			break;
+		}
+		keyboardReport->KeyCode[nextKeycode++] = scanCode;
 	}
 
-	BITSET_CLEAR(lastKeystate);
 	return true;
 }

@@ -74,6 +74,13 @@
 	} while (0)
 
 /**
+ * Clear bit at the given index
+ */
+#define BITSET_CLEAR(bset, index) do {					\
+		(bset)._b[BITSET_BLOCK(index)] &= ~(1 << BITSET_OFF(index)); \
+	} while (0)
+
+/**
  * Iterate over each bit in the bitset
  */
 #define BITSET_FOREACH(idxvar, valvar, bset)				\
@@ -84,6 +91,6 @@
 /**
  * Clear bitset
  */
-#define BITSET_CLEAR(bset) memset(&(bset)._b, 0, sizeof((bset)._b));
+#define BITSET_CLEAR_ALL(bset) memset(&(bset)._b, 0, sizeof((bset)._b));
 
 #endif /* _BITSET_H_ */

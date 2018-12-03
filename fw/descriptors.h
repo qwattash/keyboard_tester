@@ -31,13 +31,19 @@
 #include <LUFA/Drivers/USB/USB.h>
 
 /** Endpoint address of the CDC device-to-host notification IN endpoint. */
-#define CDC_NOTIFICATION_EPADDR        (ENDPOINT_DIR_IN  | 2)
+#define CDC_NOTIFICATION_EPADDR        (ENDPOINT_DIR_IN | 2)
 
 /** Endpoint address of the CDC device-to-host data IN endpoint. */
-#define CDC_TX_EPADDR                  (ENDPOINT_DIR_IN  | 3)
+#define CDC_TX_EPADDR                  (ENDPOINT_DIR_IN | 3)
 
 /** Endpoint address of the CDC host-to-device data OUT endpoint. */
 #define CDC_RX_EPADDR                  (ENDPOINT_DIR_OUT | 4)
+
+/** Endpoint address of the HID Report input endpoint */
+#define HID_REPORT_IN_EPADDR           (ENDPOINT_DIR_IN | 5)
+
+/** Size in bytes of the HID Report IN endpoint */
+#define HID_REPORT_EPSIZE              8
 
 /** Size in bytes of the CDC device-to-host notification IN endpoint. */
 #define CDC_NOTIFICATION_EPSIZE        8
@@ -68,9 +74,9 @@ typedef struct
 	USB_Descriptor_Endpoint_t CDC_DataInEndpoint;
 	
 	// Keyboard HID interface
-	/* USB_Descriptor_Interface_t HID_Interface; */
-	/* USB_HID_Descriptor_HID_t HID_Keyboard; */
-	/* USB_Descriptor_Endpoint_t HID_ReportEndpointIN; */
+	USB_Descriptor_Interface_t HID_Interface;
+	USB_HID_Descriptor_HID_t HID_Keyboard;
+	USB_Descriptor_Endpoint_t HID_ReportEndpoint;
   
 } USB_Descriptor_Configuration_t;
 
