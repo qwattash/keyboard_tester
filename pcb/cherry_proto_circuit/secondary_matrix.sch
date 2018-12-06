@@ -1,0 +1,502 @@
+EESchema Schematic File Version 4
+LIBS:cherry_proto_circuit-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 5 5
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text HLabel 7150 4300 0    50   BiDi ~ 0
+SDA
+Text HLabel 7150 4100 0    50   Input ~ 0
+SCL
+Text HLabel 7700 2200 2    50   Input ~ 0
+GND
+Text HLabel 6400 4200 0    50   Output ~ 0
+INTR
+Text HLabel 7700 2000 2    50   Input ~ 0
+VCC
+$Comp
+L device:R R16
+U 1 1 5C06AC34
+P 6650 4450
+F 0 "R16" V 6650 4450 50  0000 C CNN
+F 1 "100k" V 6750 4450 50  0000 C CNN
+F 2 "" V 6580 4450 50  0001 C CNN
+F 3 "" H 6650 4450 50  0001 C CNN
+	1    6650 4450
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:R R17
+U 1 1 5C06B161
+P 7500 2400
+F 0 "R17" V 7500 2400 50  0000 C CNN
+F 1 "33k" V 7384 2400 50  0000 C CNN
+F 2 "" V 7430 2400 50  0001 C CNN
+F 3 "" H 7500 2400 50  0001 C CNN
+	1    7500 2400
+	-1   0    0    1   
+$EndComp
+$Comp
+L Switch:SW_Push SW7
+U 1 1 5C06BF34
+P 1100 3100
+F 0 "SW7" V 1054 3248 50  0000 L CNN
+F 1 "SW_Push" V 1145 3248 50  0000 L CNN
+F 2 "" H 1100 3300 50  0001 C CNN
+F 3 "" H 1100 3300 50  0001 C CNN
+	1    1100 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW10
+U 1 1 5C06BFE5
+P 3850 3100
+F 0 "SW10" V 3804 3248 50  0000 L CNN
+F 1 "SW_Push" V 3895 3248 50  0000 L CNN
+F 2 "" H 3850 3300 50  0001 C CNN
+F 3 "" H 3850 3300 50  0001 C CNN
+	1    3850 3100
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW8
+U 1 1 5C06C029
+P 1100 4500
+F 0 "SW8" V 1054 4648 50  0000 L CNN
+F 1 "SW_Push" V 1145 4648 50  0000 L CNN
+F 2 "" H 1100 4700 50  0001 C CNN
+F 3 "" H 1100 4700 50  0001 C CNN
+	1    1100 4500
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW9
+U 1 1 5C06C0AB
+P 2650 4500
+F 0 "SW9" V 2604 4648 50  0000 L CNN
+F 1 "SW_Push" V 2695 4648 50  0000 L CNN
+F 2 "" H 2650 4700 50  0001 C CNN
+F 3 "" H 2650 4700 50  0001 C CNN
+	1    2650 4500
+	0    1    1    0   
+$EndComp
+$Comp
+L Switch:SW_Push SW11
+U 1 1 5C06C0F9
+P 3850 4500
+F 0 "SW11" V 3804 4648 50  0000 L CNN
+F 1 "SW_Push" V 3895 4648 50  0000 L CNN
+F 2 "" H 3850 4700 50  0001 C CNN
+F 3 "" H 3850 4700 50  0001 C CNN
+	1    3850 4500
+	0    1    1    0   
+$EndComp
+$Comp
+L device:D D16
+U 1 1 5C06C2CC
+P 1250 3450
+F 0 "D16" H 1250 3234 50  0000 C CNN
+F 1 "D" H 1250 3325 50  0000 C CNN
+F 2 "" H 1250 3450 50  0001 C CNN
+F 3 "" H 1250 3450 50  0001 C CNN
+	1    1250 3450
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D D17
+U 1 1 5C06C3A3
+P 1250 4850
+F 0 "D17" H 1250 4634 50  0000 C CNN
+F 1 "D" H 1250 4725 50  0000 C CNN
+F 2 "" H 1250 4850 50  0001 C CNN
+F 3 "" H 1250 4850 50  0001 C CNN
+	1    1250 4850
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D D18
+U 1 1 5C06C3F5
+P 2800 4850
+F 0 "D18" H 2800 4634 50  0000 C CNN
+F 1 "D" H 2800 4725 50  0000 C CNN
+F 2 "" H 2800 4850 50  0001 C CNN
+F 3 "" H 2800 4850 50  0001 C CNN
+	1    2800 4850
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D D20
+U 1 1 5C06C44B
+P 4000 4850
+F 0 "D20" H 4000 4634 50  0000 C CNN
+F 1 "D" H 4000 4725 50  0000 C CNN
+F 2 "" H 4000 4850 50  0001 C CNN
+F 3 "" H 4000 4850 50  0001 C CNN
+	1    4000 4850
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:D D19
+U 1 1 5C06C4A1
+P 4000 3450
+F 0 "D19" H 4000 3234 50  0000 C CNN
+F 1 "D" H 4000 3325 50  0000 C CNN
+F 2 "" H 4000 3450 50  0001 C CNN
+F 3 "" H 4000 3450 50  0001 C CNN
+	1    4000 3450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1400 3450 1500 3450
+Wire Wire Line
+	1500 3450 1500 3650
+Wire Wire Line
+	1500 3650 4250 3650
+Wire Wire Line
+	5050 3650 5050 3100
+Wire Wire Line
+	5050 3100 5700 3100
+Wire Wire Line
+	4150 3450 4250 3450
+Wire Wire Line
+	4250 3450 4250 3650
+Connection ~ 4250 3650
+Wire Wire Line
+	4250 3650 5050 3650
+Wire Wire Line
+	5250 5050 5250 3200
+Wire Wire Line
+	5250 3200 5400 3200
+Wire Wire Line
+	4250 4850 4250 5050
+Wire Wire Line
+	4150 4850 4250 4850
+Connection ~ 4250 5050
+Wire Wire Line
+	4250 5050 5250 5050
+Wire Wire Line
+	3050 5050 3050 4850
+Wire Wire Line
+	3050 4850 2950 4850
+Wire Wire Line
+	3050 5050 4250 5050
+Wire Wire Line
+	3050 5050 1500 5050
+Wire Wire Line
+	1500 5050 1500 4850
+Wire Wire Line
+	1500 4850 1400 4850
+Connection ~ 3050 5050
+Wire Wire Line
+	3850 3300 3850 3450
+Wire Wire Line
+	1100 3300 1100 3450
+Wire Wire Line
+	1100 4700 1100 4850
+Wire Wire Line
+	2650 4700 2650 4850
+Wire Wire Line
+	3850 4700 3850 4850
+$Comp
+L device:R R15
+U 1 1 5C07161B
+P 5700 3500
+F 0 "R15" H 5630 3454 50  0000 R CNN
+F 1 "47k" H 5630 3545 50  0000 R CNN
+F 2 "" V 5630 3500 50  0001 C CNN
+F 3 "" H 5700 3500 50  0001 C CNN
+	1    5700 3500
+	-1   0    0    1   
+$EndComp
+$Comp
+L device:R R14
+U 1 1 5C0720EB
+P 5400 3500
+F 0 "R14" H 5330 3454 50  0000 R CNN
+F 1 "47k" H 5330 3545 50  0000 R CNN
+F 2 "" V 5330 3500 50  0001 C CNN
+F 3 "" H 5400 3500 50  0001 C CNN
+	1    5400 3500
+	-1   0    0    1   
+$EndComp
+Text HLabel 5800 3800 2    50   Input ~ 0
+GND
+Wire Wire Line
+	5700 3800 5700 3650
+Wire Wire Line
+	5400 3800 5400 3650
+Wire Wire Line
+	5400 3350 5400 3200
+Wire Wire Line
+	5700 3350 5700 3100
+Wire Wire Line
+	3750 2750 3750 2850
+Wire Wire Line
+	3750 4250 3850 4250
+Wire Wire Line
+	3850 4250 3850 4300
+Wire Wire Line
+	3750 2850 3850 2850
+Wire Wire Line
+	3850 2850 3850 2900
+Connection ~ 3750 2850
+Wire Wire Line
+	3750 2850 3750 4250
+Wire Wire Line
+	2650 2650 2650 4300
+Wire Wire Line
+	1000 4250 1100 4250
+Wire Wire Line
+	1100 4250 1100 4300
+Wire Wire Line
+	1000 2850 1100 2850
+Wire Wire Line
+	1100 2850 1100 2900
+Connection ~ 1000 2850
+Wire Wire Line
+	1000 2850 1000 4250
+$Comp
+L Connector:Conn_02x03_Odd_Even J3
+U 1 1 5C08488E
+P 7200 3050
+F 0 "J3" V 7250 3050 50  0000 C CNN
+F 1 "SPI Prog" H 7250 3300 50  0000 C CNN
+F 2 "" H 7200 3050 50  0001 C CNN
+F 3 "~" H 7200 3050 50  0001 C CNN
+	1    7200 3050
+	0    -1   -1   0   
+$EndComp
+Text HLabel 10200 2900 2    50   Input ~ 0
+GND
+$Comp
+L atmel:ATTINY261-20PU U4
+U 1 1 5C078ED6
+P 8750 3500
+F 0 "U4" H 8750 2433 50  0000 C CNN
+F 1 "ATTINY261-20PU" H 8750 2524 50  0000 C CNN
+F 2 "Housings_DIP:DIP-20_W7.62mm" H 8750 3500 50  0001 C CIN
+F 3 "http://www.atmel.com/images/atmel-2588-8-bit-avr-microcontrollers-tinyavr-attiny261-attiny461-attiny861_datasheet.pdf" H 8750 3500 50  0001 C CNN
+	1    8750 3500
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7150 4100 7650 4100
+Wire Wire Line
+	7150 4300 7650 4300
+Wire Wire Line
+	6400 4200 6650 4200
+Text HLabel 10200 4100 2    50   Input ~ 0
+VCC
+Wire Wire Line
+	9900 2700 10050 2700
+Wire Wire Line
+	10050 2700 10050 2900
+Wire Wire Line
+	10050 2900 10200 2900
+Wire Wire Line
+	10050 2900 10050 3100
+Wire Wire Line
+	10050 3100 9850 3100
+Connection ~ 10050 2900
+Wire Wire Line
+	9850 3900 10050 3900
+Wire Wire Line
+	10050 3900 10050 4100
+Wire Wire Line
+	10050 4100 10200 4100
+Wire Wire Line
+	10050 4100 10050 4300
+Wire Wire Line
+	10050 4300 9850 4300
+Connection ~ 10050 4100
+Wire Wire Line
+	5400 3800 5700 3800
+Wire Wire Line
+	5700 3800 5800 3800
+Connection ~ 5700 3800
+Wire Wire Line
+	7650 2700 7500 2700
+Wire Wire Line
+	7700 2200 7500 2200
+Wire Wire Line
+	7500 2200 7500 2250
+Wire Wire Line
+	7700 2000 7100 2000
+Connection ~ 7500 2200
+Wire Wire Line
+	7500 2550 7500 2700
+Wire Wire Line
+	7100 3250 7100 3400
+Wire Wire Line
+	7100 3400 7500 3400
+Wire Wire Line
+	7500 3400 7500 3300
+Wire Wire Line
+	7500 3300 7650 3300
+Wire Wire Line
+	7200 3250 7200 3350
+Wire Wire Line
+	7200 3350 7450 3350
+Wire Wire Line
+	7450 3350 7450 3200
+Wire Wire Line
+	7450 3200 7650 3200
+Wire Wire Line
+	7200 2750 7200 2600
+Wire Wire Line
+	7200 2600 6850 2600
+Wire Wire Line
+	6850 2600 6850 3450
+Wire Wire Line
+	6850 3450 7550 3450
+Wire Wire Line
+	7550 3450 7550 3400
+Wire Wire Line
+	7550 3400 7650 3400
+Wire Wire Line
+	7300 3250 7300 3300
+Wire Wire Line
+	7300 3300 7400 3300
+Wire Wire Line
+	7400 3300 7400 2700
+Wire Wire Line
+	7400 2700 7500 2700
+Connection ~ 7500 2700
+Wire Wire Line
+	7300 2750 7300 2200
+Wire Wire Line
+	7300 2200 7500 2200
+Wire Wire Line
+	7100 2750 7100 2000
+Wire Wire Line
+	5400 3200 6050 3200
+Connection ~ 5400 3200
+Wire Wire Line
+	7650 4000 6050 4000
+Wire Wire Line
+	6050 4000 6050 3200
+Wire Wire Line
+	7650 3900 6150 3900
+Wire Wire Line
+	6150 3900 6150 3100
+Wire Wire Line
+	6150 3100 5700 3100
+Connection ~ 5700 3100
+Wire Wire Line
+	6250 2750 6250 3800
+Wire Wire Line
+	6250 3800 7650 3800
+Wire Wire Line
+	3750 2750 6250 2750
+Wire Wire Line
+	6350 2650 6350 3700
+Wire Wire Line
+	6350 3700 7650 3700
+Wire Wire Line
+	2650 2650 6350 2650
+Wire Wire Line
+	6450 2550 6450 3600
+Wire Wire Line
+	6450 3600 7650 3600
+Wire Wire Line
+	1000 2550 1000 2850
+Wire Wire Line
+	1000 2550 6450 2550
+Wire Wire Line
+	10050 4300 10050 4850
+Wire Wire Line
+	10050 4850 6650 4850
+Wire Wire Line
+	6650 4850 6650 4600
+Connection ~ 10050 4300
+Wire Wire Line
+	6650 4300 6650 4200
+Connection ~ 6650 4200
+Wire Wire Line
+	6650 4200 7650 4200
+NoConn ~ 7650 2800
+NoConn ~ 7650 2900
+NoConn ~ 7650 3000
+NoConn ~ 7650 3100
+Text HLabel 6600 700  0    50   Input ~ 0
+VCC
+Text HLabel 6600 1200 0    50   Input ~ 0
+GND
+$Comp
+L device:CP1 C?
+U 1 1 5C15302F
+P 6950 950
+F 0 "C?" H 7065 996 50  0000 L CNN
+F 1 "100u" H 7065 905 50  0000 L CNN
+F 2 "" H 6950 950 50  0001 C CNN
+F 3 "" H 6950 950 50  0001 C CNN
+	1    6950 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:C C?
+U 1 1 5C1531BC
+P 7500 950
+F 0 "C?" H 7615 996 50  0000 L CNN
+F 1 "0.1u" H 7615 905 50  0000 L CNN
+F 2 "" H 7538 800 50  0001 C CNN
+F 3 "" H 7500 950 50  0001 C CNN
+	1    7500 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L device:C C?
+U 1 1 5C15328E
+P 7950 950
+F 0 "C?" H 8065 996 50  0000 L CNN
+F 1 "0.1u" H 8065 905 50  0000 L CNN
+F 2 "" H 7988 800 50  0001 C CNN
+F 3 "" H 7950 950 50  0001 C CNN
+	1    7950 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6600 1200 6950 1200
+Wire Wire Line
+	7950 1200 7950 1100
+Wire Wire Line
+	7500 1200 7500 1100
+Connection ~ 7500 1200
+Wire Wire Line
+	7500 1200 7950 1200
+Wire Wire Line
+	6950 1200 6950 1100
+Connection ~ 6950 1200
+Wire Wire Line
+	6950 1200 7500 1200
+Wire Wire Line
+	6600 700  6950 700 
+Wire Wire Line
+	7950 700  7950 800 
+Wire Wire Line
+	7500 800  7500 700 
+Connection ~ 7500 700 
+Wire Wire Line
+	7500 700  7950 700 
+Wire Wire Line
+	6950 800  6950 700 
+Connection ~ 6950 700 
+Wire Wire Line
+	6950 700  7500 700 
+Text Notes 6850 1300 0    50   ~ 0
+Bulk
+Text Notes 7400 1300 0    50   ~ 0
+AVCC
+Text Notes 7900 1300 0    50   ~ 0
+VCC
+$EndSCHEMATC
