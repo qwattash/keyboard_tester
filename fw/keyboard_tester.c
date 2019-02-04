@@ -42,6 +42,16 @@ static void deinitKeyboardScan(void);
 static void startKeyboardScan(void);
 static void stopKeyboardScan(void);
 
+/**
+ * Standard file stream for the CDC interface when set up,
+ * so that the virtual CDC COM port can be
+ * used like any regular character stream in the C APIs.
+ */
+FILE serialStream;
+bool hostConnected = false;
+
+static char banner[] = "Welcome to the KeyboardTester board DEBUG serial\r\n";
+
 /** 
  * LUFA CDC Class driver interface configuration and state information.
  * This structure is passed to all CDC Class driver functions,
@@ -95,16 +105,6 @@ static USB_ClassInfo_HID_Device_t Keyboard_HID_Interface = {
 };
 
 /**
- * Standard file stream for the CDC interface when set up,
- * so that the virtual CDC COM port can be
- * used like any regular character stream in the C APIs.
- */
-FILE serialStream;
-bool hostConnected = false;
-
-static char banner[] = "Welcome to the KeyboardTester board DEBUG serial\r\n";
-
-/**
  * Initialize the hardware
  */
 static void
@@ -137,9 +137,9 @@ setupHardware()
  */
 ISR(TIMER1_COMPA_vect)
 {
-	if (hostConnected) {
+	/* if (hostConnected) { */
 		matrixScan();
-	}
+	/* } */
 }
 
 /**
@@ -151,8 +151,10 @@ initKeyboardScan()
 	/* enable clock to timer 1 */
 	PRR0 &= ~(1 << PRTIM1);
 
-	TCCR1A = 0; // reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
-	TCCR1B = 0; // reset control register B
+	// reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
+	TCCR1A = 0;
+	// reset control register B
+	TCCR1B = 0;
 	
 	TIFR1 = 0; // clear timer 1 interrupt flag register
 	TIMSK1 = 0; // clear interrupt mask for timer 1
@@ -228,7 +230,8 @@ main(void)
 	 */
 	CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &serialStream);
 	/* Shutdown leds */
-	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);	
+	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+
 	initKeyboardScan();
 	startKeyboardScan();
 
@@ -310,8 +313,9 @@ void EVENT_CDC_Device_ControLineStateChanged(
 	hostConnected = (
 		CDCInterfaceInfo->State.ControlLineStates.HostToDevice &
 		CDC_CONTROL_LINE_OUT_DTR) != 0;
-	if (hostConnected)
+	if (hostConnected) {
 		fputs(banner, &serialStream);
+	}
 }
 
 /** HID class driver callback function that handles keyboard report creation
