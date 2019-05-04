@@ -79,10 +79,11 @@ void EVENT_USB_Device_ControlRequest(void);
 
 extern FILE serialStream;
 extern bool hostConnected;
+extern bool debugConnected;
 
-#define DEBUG(fmt, args...) do {				\
-		if (hostConnected)				\
-			fprintf(&serialStream, fmt, args);	\
+#define DEBUG(fmt, ...) do {						\
+		if (debugConnected)					\
+			fprintf(&serialStream, fmt, ## __VA_ARGS__);	\
 	} while (0)
 
 #endif

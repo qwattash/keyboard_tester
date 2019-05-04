@@ -32,6 +32,7 @@
 #include <LUFA/Drivers/USB/USB.h>
 #include <LUFA/Platform/Platform.h>
 
+#include "backlight.h"
 #include "descriptors.h"
 #include "keyboard_tester.h"
 #include "matrix.h"
@@ -49,6 +50,23 @@ static void stopKeyboardScan(void);
  */
 FILE serialStream;
 bool hostConnected = false;
+bool debugConnected = false;
+int ledCheckDelay = 50;
+bool ledChecked = false;
+
+struct LedColor white = {128, 128, 128};
+struct LedColor red = {128, 0, 0};
+struct LedColor green = {0, 128, 0};
+struct LedColor blue = {0, 0, 128};
+struct LedColor yellow = {128, 128, 0};
+struct LedColor cyan = {0, 128, 128};
+struct LedColor magenta = {128, 0, 128};
+struct LedColor custom = {140, 140, 0};
+
+/**
+ * Backlight driver state 
+ */
+static struct IS3733_State backlight_state;
 
 static char banner[] = "Welcome to the KeyboardTester board DEBUG serial\r\n";
 
@@ -59,24 +77,24 @@ static char banner[] = "Welcome to the KeyboardTester board DEBUG serial\r\n";
  * be differentiated from one another.
  */
 static USB_ClassInfo_CDC_Device_t VirtualSerial_CDC_Interface = {
-	.Config = {
-		.ControlInterfaceNumber = INTERFACE_ID_CDC_CCI,
-		.DataINEndpoint = {
-			.Address = CDC_TX_EPADDR,
-			.Size = CDC_TXRX_EPSIZE,
-			.Banks = 1,
-		},
-		.DataOUTEndpoint = {
-			.Address = CDC_RX_EPADDR,
-			.Size = CDC_TXRX_EPSIZE,
-			.Banks = 1,
-		},
-		.NotificationEndpoint = {
-			.Address = CDC_NOTIFICATION_EPADDR,
-			.Size = CDC_NOTIFICATION_EPSIZE,
-			.Banks = 1,
-		},
-	},
+  .Config = {
+    .ControlInterfaceNumber = INTERFACE_ID_CDC_CCI,
+    .DataINEndpoint = {
+      .Address = CDC_TX_EPADDR,
+      .Size = CDC_TXRX_EPSIZE,
+      .Banks = 1,
+    },
+    .DataOUTEndpoint = {
+      .Address = CDC_RX_EPADDR,
+      .Size = CDC_TXRX_EPSIZE,
+      .Banks = 1,
+    },
+    .NotificationEndpoint = {
+      .Address = CDC_NOTIFICATION_EPADDR,
+      .Size = CDC_NOTIFICATION_EPSIZE,
+      .Banks = 1,
+    },
+  },
 };
 
 /**
@@ -92,16 +110,16 @@ static uint8_t prevHIDKeyboardReportBuffer[sizeof(USB_KeyboardReport_Data_t)];
  * differentiated from one another.
  */
 static USB_ClassInfo_HID_Device_t Keyboard_HID_Interface = {
-	.Config = {
-		.InterfaceNumber = INTERFACE_ID_Keyboard,
-		.ReportINEndpoint = {
-			.Address = HID_REPORT_IN_EPADDR,
-			.Size = HID_REPORT_EPSIZE,
-			.Banks = 1
-		},
-		.PrevReportINBuffer = prevHIDKeyboardReportBuffer,
-		.PrevReportINBufferSize = sizeof(prevHIDKeyboardReportBuffer)
-	},
+  .Config = {
+    .InterfaceNumber = INTERFACE_ID_Keyboard,
+    .ReportINEndpoint = {
+      .Address = HID_REPORT_IN_EPADDR,
+      .Size = HID_REPORT_EPSIZE,
+      .Banks = 1
+    },
+    .PrevReportINBuffer = prevHIDKeyboardReportBuffer,
+    .PrevReportINBufferSize = sizeof(prevHIDKeyboardReportBuffer)
+  },
 };
 
 /**
@@ -110,25 +128,44 @@ static USB_ClassInfo_HID_Device_t Keyboard_HID_Interface = {
 static void
 setupHardware()
 {
-	/* Disable watchdog */
-	MCUSR &= ~(1 << WDRF);
-	wdt_disable();
+  /* Disable watchdog */
+  MCUSR &= ~(1 << WDRF);
+  wdt_disable();
 
-	/* Disable clock division */
-	clock_prescale_set(clock_div_1);
+  /* Disable clock division */
+  clock_prescale_set(clock_div_1);
 
-	/* Set port F mode to general purpose I/O
-	 * output pin: 0,1,4 -- no pullup
-	 * input pin: 5,6
-	 */
-	PORTF = 0;
-	DDRF = (1 << DDF0) | (1 << DDF1) | (1 << DDF4);
+  /* Set port F mode to general purpose I/O
+   * output pin: 0,1,4 -- no pullup
+   * input pin: 5,6
+   */
+  PORTF = 0;
+  DDRF = (1 << DDF0) | (1 << DDF1) | (1 << DDF4);
 
-	LEDs_Init();
-	/* Hardware Initialization */
-	USB_Init(USB_DEVICE_OPT_FULLSPEED | USB_OPT_AUTO_PLL);
+  LEDs_Init();
+  /* Hardware Initialization */
+  USB_Init(USB_DEVICE_OPT_FULLSPEED | USB_OPT_AUTO_PLL);
 
-	hostConnected = false;
+  hostConnected = false;
+  debugConnected = false;
+
+  backlight_init(&backlight_state, I2C_BACKLIGHT_BUSADDR);
+}
+
+/**
+ * Called when the backlight self-check has been completed.
+ */
+static void
+backlight_check_done()
+{
+  backlight_check(&backlight_state);
+
+  backlight_brightness(&backlight_state, 255);
+  backlight_set(&backlight_state, 0, 3, white);
+  backlight_set(&backlight_state, 0, 5, cyan);
+  backlight_set(&backlight_state, 1, 3, magenta);
+  backlight_set(&backlight_state, 1, 4, custom);
+  backlight_set(&backlight_state, 1, 5, green);
 }
 
 /* 
@@ -137,9 +174,14 @@ setupHardware()
  */
 ISR(TIMER1_COMPA_vect)
 {
-	/* if (hostConnected) { */
-		matrixScan();
-	/* } */
+  if (hostConnected) {
+    matrixScan();
+  }
+
+  if (!ledChecked && (ledCheckDelay-- == 0)) {
+    ledChecked = true;
+    backlight_check_done();
+  }
 }
 
 /**
@@ -148,18 +190,18 @@ ISR(TIMER1_COMPA_vect)
 static void
 initKeyboardScan()
 {
-	/* enable clock to timer 1 */
-	PRR0 &= ~(1 << PRTIM1);
+  /* enable clock to timer 1 */
+  PRR0 &= ~(1 << PRTIM1);
 
-	// reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
-	TCCR1A = 0;
-	// reset control register B
-	TCCR1B = 0;
+  // reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
+  TCCR1A = 0;
+  // reset control register B
+  TCCR1B = 0;
 	
-	TIFR1 = 0; // clear timer 1 interrupt flag register
-	TIMSK1 = 0; // clear interrupt mask for timer 1
+  TIFR1 = 0; // clear timer 1 interrupt flag register
+  TIMSK1 = 0; // clear interrupt mask for timer 1
 
-	matrixReset();
+  matrixReset();
 }
 
 /**
@@ -168,14 +210,14 @@ initKeyboardScan()
 static void
 deinitKeyboardScan()
 {
-	TIFR1 = 0; // clear timer 1 interrupt flag register
-	TIMSK1 = 0; // clear interrupt mask for timer 1
+  TIFR1 = 0; // clear timer 1 interrupt flag register
+  TIMSK1 = 0; // clear interrupt mask for timer 1
 
-	TCCR1A = 0; // reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
-	TCCR1B = 0; // reset control register B
+  TCCR1A = 0; // reset to normal mode for all channels (A, B, C), WGM1[1:0] = 0
+  TCCR1B = 0; // reset control register B
 
-	/* disable clock to timer 1 */
-	PRR0 |= (1 << PRTIM1);
+  /* disable clock to timer 1 */
+  PRR0 |= (1 << PRTIM1);
 }
 
 /**
@@ -185,114 +227,117 @@ deinitKeyboardScan()
 static void
 startKeyboardScan()
 {
-	/* 
-	 * select operation mode for timer 1
-	 * we use CTC (Clear Timer on Compare match) WGM (waveform generation mode),
-	 * waveform function generator OC1{A,B,C} outputs are disconnected
-	 * we use the prescaler clock source with clk/64 division
-	 * we use channel A for compare and trigger an interrupt on match
-	 *
-	 * TCCR1A = 0;
-	 * TCCR1B = 0;
-	 */
+  /* 
+   * select operation mode for timer 1
+   * we use CTC (Clear Timer on Compare match) WGM (waveform generation mode),
+   * waveform function generator OC1{A,B,C} outputs are disconnected
+   * we use the prescaler clock source with clk/64 division
+   * we use channel A for compare and trigger an interrupt on match
+   *
+   * TCCR1A = 0;
+   * TCCR1B = 0;
+   */
 
-	/* set output compare registers */
-	OCR1A = KEYBOARD_SCAN_INTERVAL_MS * TIMER1_TICKS;
+  /* set output compare registers */
+  OCR1A = KEYBOARD_SCAN_INTERVAL_MS * TIMER1_TICKS;
 	
-	TIFR1 |= (1 << OCF1A); // enable OCF1A OC1A interrupt
-	TIMSK1 |= (1 << OCIE1A); // unmask OC1A interrupt
+  TIFR1 |= (1 << OCF1A); // enable OCF1A OC1A interrupt
+  TIMSK1 |= (1 << OCIE1A); // unmask OC1A interrupt
 
-	/* WGM1[3:2] select CTC */
-	TCCR1B |= (1 << WGM12) | (0 << WGM13);
-	/* Select clock source and start the timer, clk/64 prescaler */
-	TCCR1B |= (0 << CS12) | (1 << CS11) | (1 << CS10);
+  /* WGM1[3:2] select CTC */
+  TCCR1B |= (1 << WGM12) | (0 << WGM13);
+  /* Select clock source and start the timer, clk/64 prescaler */
+  TCCR1B |= (0 << CS12) | (1 << CS11) | (1 << CS10);
 }
 
 static void
 stopKeyboardScan()
 {
-	/* Mask timer interrupt */
-	TIMSK1 &= ~(1 << OCIE1A);
-	/* Clear clock source and stop timer */
-	TCCR1B &= ~((1 << CS12) | (1 << CS11) | (1 << CS10));
+  /* Mask timer interrupt */
+  TIMSK1 &= ~(1 << OCIE1A);
+  /* Clear clock source and stop timer */
+  TCCR1B &= ~((1 << CS12) | (1 << CS11) | (1 << CS10));
 }
 
 int
 main(void)
 {
-	/* disable interrupts before anything else */
-	cli();
+  /* disable interrupts before anything else */
+  cli();
 
-	setupHardware();
-	/* 
-	 * Create a regular character stream for the interface so that
-	 * it can be used with the stdio.h functions
-	 */
-	CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &serialStream);
-	/* Shutdown leds */
-	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+  setupHardware();
+	
+  /* 
+   * Create a regular character stream for the interface so that
+   * it can be used with the stdio.h functions
+   */
+  CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &serialStream);
+  /* Shutdown leds */
+  LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
 
-	initKeyboardScan();
-	startKeyboardScan();
+  initKeyboardScan();
+  startKeyboardScan();
 
-	/* enable interrupts */
-	sei();
+  /* enable interrupts */
+  sei();
 
-	while (true) {
-		/*
-		 * Must throw away unused bytes from the host,
-		 * or it will lock up while waiting for the device
-		 */
-		CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
-		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
-		HID_Device_USBTask(&Keyboard_HID_Interface);
-		USB_USBTask();
-	}
+  while (true) {
+    /*
+     * Must throw away unused bytes from the host,
+     * or it will lock up while waiting for the device
+     */
+    CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
+    CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
+    HID_Device_USBTask(&Keyboard_HID_Interface);
+    USB_USBTask();
+  }
 }
 
 /** Event handler for the library USB Connection event. */
 void EVENT_USB_Device_Connect(void)
 {
-	LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
+  LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
+  hostConnected = true;
 }
 
 /** Event handler for the library USB Disconnection event. */
 void EVENT_USB_Device_Disconnect(void)
 {
-	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+  LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+  hostConnected = false;
 }
 
 /** Event handler for the library USB Configuration Changed event. */
 void EVENT_USB_Device_ConfigurationChanged(void)
 {
-	bool ConfigSuccess = true;
+  bool ConfigSuccess = true;
 
-	ConfigSuccess &= CDC_Device_ConfigureEndpoints(
-		&VirtualSerial_CDC_Interface);
-	ConfigSuccess &= HID_Device_ConfigureEndpoints(
-		&Keyboard_HID_Interface);
+  ConfigSuccess &= CDC_Device_ConfigureEndpoints(
+						 &VirtualSerial_CDC_Interface);
+  ConfigSuccess &= HID_Device_ConfigureEndpoints(
+						 &Keyboard_HID_Interface);
 
-	/* Enable start-of-frame interrupts, this calls the StartOfFrame device event */
-	USB_Device_EnableSOFEvents();
+  /* Enable start-of-frame interrupts, this calls the StartOfFrame device event */
+  USB_Device_EnableSOFEvents();
 
-	LEDs_SetAllLEDs(ConfigSuccess ? LEDMASK_USB_READY : LEDMASK_USB_ERROR);
+  LEDs_SetAllLEDs(ConfigSuccess ? LEDMASK_USB_READY : LEDMASK_USB_ERROR);
 }
 
 /** Event triggered once every millisecond by the SOF interrupt */
 void EVENT_USB_Device_StartOfFrame(void)
 {
-	/** Signals to the HID driver that a millisecond have elapsed.
-	 * This is used internally to keep the idle count and handle
-	 * hardware key repeats.
-	 */
-	HID_Device_MillisecondElapsed(&Keyboard_HID_Interface);
+  /** Signals to the HID driver that a millisecond have elapsed.
+   * This is used internally to keep the idle count and handle
+   * hardware key repeats.
+   */
+  HID_Device_MillisecondElapsed(&Keyboard_HID_Interface);
 }
 
 /** Event handler for the library USB Control Request reception event. */
 void EVENT_USB_Device_ControlRequest(void)
 {
-	CDC_Device_ProcessControlRequest(&VirtualSerial_CDC_Interface);
-	HID_Device_ProcessControlRequest(&Keyboard_HID_Interface);
+  CDC_Device_ProcessControlRequest(&VirtualSerial_CDC_Interface);
+  HID_Device_ProcessControlRequest(&Keyboard_HID_Interface);
 }
 
 /** CDC class driver callback function that handles changes to the virtual
@@ -302,20 +347,28 @@ void EVENT_USB_Device_ControlRequest(void)
  *  configuration structure being referenced
  */
 void EVENT_CDC_Device_ControLineStateChanged(
-	USB_ClassInfo_CDC_Device_t * const CDCInterfaceInfo)
+    USB_ClassInfo_CDC_Device_t * const CDCInterfaceInfo)
 {
-	/* You can get changes to the virtual CDC lines in this callback; a common
-	   use-case is to use the Data Terminal Ready (DTR) flag to enable and
-	   disable CDC communications in your application when set to avoid the
-	   application blocking while waiting for a host to become ready and read
-	   in the pending data from the USB endpoints.
-	*/
-	hostConnected = (
-		CDCInterfaceInfo->State.ControlLineStates.HostToDevice &
-		CDC_CONTROL_LINE_OUT_DTR) != 0;
-	if (hostConnected) {
-		fputs(banner, &serialStream);
-	}
+  /* You can get changes to the virtual CDC lines in this callback; a common
+     use-case is to use the Data Terminal Ready (DTR) flag to enable and
+     disable CDC communications in your application when set to avoid the
+     application blocking while waiting for a host to become ready and read
+     in the pending data from the USB endpoints.
+  */
+  debugConnected = (
+		    CDCInterfaceInfo->State.ControlLineStates.HostToDevice &
+		    CDC_CONTROL_LINE_OUT_DTR) != 0;
+  if (debugConnected) {
+    fputs(banner, &serialStream);
+
+    /* Initialize backlight */
+    backlight_reset(&backlight_state);
+
+    /* Start LED diagnostic */
+    backlight_check_trigger(&backlight_state);
+    ledChecked = false;
+    ledCheckDelay = 100;
+  }
 }
 
 /** HID class driver callback function that handles keyboard report creation
@@ -331,25 +384,25 @@ void EVENT_CDC_Device_ControLineStateChanged(
  * \return True to force sending of the report, false let the library decide.
  */
 bool CALLBACK_HID_Device_CreateHIDReport(
-	USB_ClassInfo_HID_Device_t * const HIDInterfaceInfo,
-	uint8_t * const reportID,
-	const uint8_t reportType,
-	void *reportData,
-	uint16_t * const reportSize)
+    USB_ClassInfo_HID_Device_t * const HIDInterfaceInfo,
+    uint8_t * const reportID,
+    const uint8_t reportType,
+    void *reportData,
+    uint16_t * const reportSize)
 {
-	USB_KeyboardReport_Data_t *kbdReport = (USB_KeyboardReport_Data_t *)reportData;
+  USB_KeyboardReport_Data_t *kbdReport = (USB_KeyboardReport_Data_t *)reportData;
 
-	if (reportType != HID_REPORT_ITEM_In) {
-		*reportSize = 0;
-		DEBUG("Error: Requested report type %x is not supported\r\n",
-		      reportType);
-		return false;
-	}
+  if (reportType != HID_REPORT_ITEM_In) {
+    *reportSize = 0;
+    DEBUG("Error: Requested report type %x is not supported\r\n",
+	  reportType);
+    return false;
+  }
 
-	matrixFillKeyboardReport(kbdReport);
-	*reportSize = sizeof(USB_KeyboardReport_Data_t);
+  matrixFillKeyboardReport(kbdReport);
+  *reportSize = sizeof(USB_KeyboardReport_Data_t);
 
-	return false;
+  return false;
 }
 
 /** HID class driver callback function that handles incoming reports from the host
@@ -363,14 +416,14 @@ bool CALLBACK_HID_Device_CreateHIDReport(
  * \param[in] reportSize Size of the received report.
  */
 void CALLBACK_HID_Device_ProcessHIDReport(
-	USB_ClassInfo_HID_Device_t * const HIDInterfaceInfo,
-	const uint8_t reportID,
-	const uint8_t reportType,
-	const void *reportData,
-	const uint16_t reportSize)
+    USB_ClassInfo_HID_Device_t * const HIDInterfaceInfo,
+    const uint8_t reportID,
+    const uint8_t reportType,
+    const void *reportData,
+    const uint16_t reportSize)
 {
-	if (reportType != HID_REPORT_ITEM_Out) {
-		DEBUG("Error: Received report type %x is not supported\r\n",
-		      reportType);
-	}
+  if (reportType != HID_REPORT_ITEM_Out) {
+    DEBUG("Error: Received report type %x is not supported\r\n",
+	  reportType);
+  }
 }
