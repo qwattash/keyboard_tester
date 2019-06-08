@@ -51,22 +51,6 @@ static void stopKeyboardScan(void);
 FILE serialStream;
 bool hostConnected = false;
 bool debugConnected = false;
-int ledCheckDelay = 50;
-bool ledChecked = false;
-
-struct LedColor white = {128, 128, 128};
-struct LedColor red = {128, 0, 0};
-struct LedColor green = {0, 128, 0};
-struct LedColor blue = {0, 0, 128};
-struct LedColor yellow = {128, 128, 0};
-struct LedColor cyan = {0, 128, 128};
-struct LedColor magenta = {128, 0, 128};
-struct LedColor custom = {140, 140, 0};
-
-/**
- * Backlight driver state 
- */
-static struct IS3733_State backlight_state;
 
 static char banner[] = "Welcome to the KeyboardTester board DEBUG serial\r\n";
 
@@ -148,24 +132,6 @@ setupHardware()
 
   hostConnected = false;
   debugConnected = false;
-
-  backlight_init(&backlight_state, I2C_BACKLIGHT_BUSADDR);
-}
-
-/**
- * Called when the backlight self-check has been completed.
- */
-static void
-backlight_check_done()
-{
-  backlight_check(&backlight_state);
-
-  backlight_brightness(&backlight_state, 255);
-  backlight_set(&backlight_state, 0, 3, white);
-  backlight_set(&backlight_state, 0, 5, cyan);
-  backlight_set(&backlight_state, 1, 3, magenta);
-  backlight_set(&backlight_state, 1, 4, custom);
-  backlight_set(&backlight_state, 1, 5, green);
 }
 
 /* 
@@ -176,11 +142,6 @@ ISR(TIMER1_COMPA_vect)
 {
   if (hostConnected) {
     matrixScan();
-  }
-
-  if (!ledChecked && (ledCheckDelay-- == 0)) {
-    ledChecked = true;
-    backlight_check_done();
   }
 }
 
@@ -277,6 +238,7 @@ main(void)
 
   initKeyboardScan();
   startKeyboardScan();
+  init_backlight_timer();
 
   /* enable interrupts */
   sei();
@@ -360,14 +322,6 @@ void EVENT_CDC_Device_ControLineStateChanged(
 		    CDC_CONTROL_LINE_OUT_DTR) != 0;
   if (debugConnected) {
     fputs(banner, &serialStream);
-
-    /* Initialize backlight */
-    backlight_reset(&backlight_state);
-
-    /* Start LED diagnostic */
-    backlight_check_trigger(&backlight_state);
-    ledChecked = false;
-    ledCheckDelay = 100;
   }
 }
 

@@ -27,12 +27,49 @@
 
 #include "keyboard_tester.h"
 #include "matrix.h"
+#include "backlight.h"
 #include "bitset.h"
+#include "error.h"
+#include "time.h"
+
+bool ledChecked = false;
+bool ledChecking = false;
 
 static void matrixSelectColumn(int idx);
 static void matrixClearColumn(int idx);
 static bool matrixFetchRow(int idx);
 static void matrixKeyPress(int row, int column);
+static void matrix_key_action(int row, int column);
+
+typedef void (*timer_callback_t)(void);
+
+/**
+ * Current led selected.
+ * 0 means no led selected.
+ */
+struct ledSelection {
+  int row;
+  int col;
+  struct LedColor color;
+};
+
+/*
+ * Current selected led. row=2 is no led selected.
+ */
+struct ledSelection currentLed = {2, 0};
+
+/**
+ * Backlight driver state
+ */
+static struct IS3733_State backlight_state;
+/** Callback invoked by the backlight timer */
+static timer_callback_t callback;
+
+static void backlight_timer_set(uint32_t nanosec, timer_callback_t cbk);
+static void backlight_do_check(void);
+static void rotate_selected_led(struct IS3733_State *state);
+static void breathe_selected_led(struct IS3733_State *state);
+static void breathe_step(void);
 
 BITSET_DECLARE(KeystateBitset, KEYBOARD_ROWS * KEYBOARD_COLUMNS);
 
@@ -74,8 +111,10 @@ matrixKeyPress(int row, int column)
 static void
 matrixKeyRelease(int row, int column)
 {
-	if (BITSET_GET(lastKeystate, RC2IDX(row, column)) == 1)
+	if (BITSET_GET(lastKeystate, RC2IDX(row, column)) == 1) {
 		DEBUG("Button [%d, %d] released\r\n", row, column);
+		matrix_key_action(row, column);
+	}
 	BITSET_CLEAR(lastKeystate, RC2IDX(row, column));
 }
 
@@ -134,4 +173,180 @@ matrixFillKeyboardReport(USB_KeyboardReport_Data_t *keyboardReport)
 	}
 
 	return true;
+}
+
+static void
+matrix_key_action(int row, int column)
+{
+	int idx = RC2IDX(row, column);
+
+	switch(idx) {
+	case 0:
+		if (!ledChecking) {
+			DEBUG("Trigger LED check\r\n");
+			ledChecking = true;
+			ledChecked = false;
+			/* Initialize backlight */
+			backlight_reset(&backlight_state);
+
+			/* Start LED diagnostic */
+			backlight_check_trigger(&backlight_state);
+			backlight_timer_set(1000000, &backlight_do_check);
+		}
+		break;
+	case 1:
+		/* Missing key */
+	case 2:
+		if (ledChecked)
+			backlight_set_pattern(&backlight_state);
+		break;
+	case 3:
+		if (ledChecked) {
+			rotate_selected_led(&backlight_state);
+		}
+		break;
+	case 4:
+		if (ledChecked) {
+			breathe_selected_led(&backlight_state);
+		}
+		break;
+	case 5:
+		if (ledChecked)
+			backlight_brightness(&backlight_state, 0);
+		break;
+	default:
+		DEBUG("Error: invalid index");
+	}
+}
+
+/**
+ * Start breathe animation on selected led.
+ * This will go through all possible colors in 0.10s intervals.
+ */
+static void
+breathe_selected_led(struct IS3733_State *state)
+{
+	DEBUG("Breathe led [%d, %d]\r\n", currentLed.row, currentLed.col);
+	currentLed.color.r = 0;
+	currentLed.color.g = 0;
+	currentLed.color.b = 0;
+	backlight_set(state, currentLed.row, currentLed.col, currentLed.color);
+	backlight_timer_set(100000, &breathe_step);
+}
+
+static void
+breathe_step()
+{
+	uint8_t old_r = currentLed.color.r;
+
+	currentLed.color.b = currentLed.color.b + 0x20;
+
+	currentLed.color.r = 0;
+	currentLed.color.g = 0;
+	currentLed.color.b = 0;
+	backlight_timer_set(100000, &breathe_step);
+}
+
+/**
+ * Rotate the currently selected LED.
+ * Assume 10 keys in the keyboard.
+ */
+static void
+rotate_selected_led(struct IS3733_State *state)
+{
+	if (currentLed.row != 2) {
+		/* Switch off current led. */
+		backlight_set(state, currentLed.row, currentLed.col, black);
+	}
+	/* Rotate led. */
+	if (currentLed.row == 2) {
+		currentLed.row = 0;
+		currentLed.col = 0;
+	}
+	else if (currentLed.col == 0 || currentLed.col == 3) {
+		/* Skip missing key */
+		currentLed.col += 2;
+	}
+	else if (currentLed.col == 5) {
+		currentLed.row += 1;
+		currentLed.col = 0;
+	}
+	else {
+		currentLed.col += 1;
+	}
+	/* If we switched to something valid, light it up. */
+	if (currentLed.row != 2)
+		backlight_set(state, currentLed.row, currentLed.col, white);
+}
+
+/**
+ * Initialize the backlight blinking and open-short detection.
+ * We use timer 2 for this.
+ */
+void
+init_backlight_timer()
+{
+	/* Select operation mode for timer 3
+	 * We use CTC (Clear Timer on Compare match) WGM (waveform generation mode).
+	 * Outputs OC3{A,B,C} of the waveform function generator are disconnected.
+	 * We use the prescaler clock source with clk/64 division,
+	 * we use channel A for compare and trigger an interrupt on match
+	 */
+
+	/* enable clock to timer 3 */
+	PRR1 &= ~(1 << PRTIM3);
+
+	// reset to normal mode for all channels (A, B, C), WGM3[1:0] = 0
+	TCCR3A = 0;
+	/* WGM3[3:2] select CTC */
+	TCCR3B |= (1 << WGM32) | (0 << WGM33);
+
+	TIFR3 = 0; // clear timer 3 interrupt flag register
+	TIFR3 |= (1 << OCF3A); // enable OCF3A OC3A interrupt
+
+	TIMSK3 = 0; // clear interrupt mask for timer 3
+
+	/* Init the backlight subsystem */
+	backlight_init(&backlight_state, I2C_BACKLIGHT_BUSADDR);
+}
+
+static void
+backlight_do_check()
+{
+	DEBUG("LED check triggered\r\n");
+	backlight_check(&backlight_state);
+	ledChecked = true;
+	ledChecking = false;
+}
+
+/**
+ * Set the next backlight timer interval.
+ */
+static void
+backlight_timer_set(uint32_t nanosec, timer_callback_t cbk)
+{
+	uint8_t clksource = get_timer3_clocksource(nanosec);
+	uint16_t ticks = get_timer3_ticks(clksource, nanosec);
+
+	DEBUG("Set backlight timer to %ldns ticks=%hd clksrc=%hhx\r\n", nanosec, ticks, clksource);
+
+	/* set output compare registers */
+	OCR3A = ticks;
+
+	callback = cbk;
+
+	TIMSK3 |= (1 << OCIE3A); // unmask OC3A interrupt
+
+	/* Select clock source and start the timer, clk/64 prescaler */
+	TCCR3B |= clksource;
+}
+
+ISR(TIMER3_COMPA_vect)
+{
+	/* Stop the timer */
+	TIMSK3 = 0;
+	TCCR3B = 0;
+
+	if (callback)
+		callback();
 }

@@ -7,6 +7,7 @@
 */
 
 /*
+  Copyright 2019  Alfredo Mazzinghi
   Copyright 2018  Dean Camera (dean [at] fourwalledcubicle [dot] com)
 
   Permission to use, copy, modify, distribute, and sell this
@@ -27,11 +28,6 @@
   arising out of or in connection with the use or performance of
   this software.
 */
-
-/** \file
- *
- *  Header file for VirtualSerial.c.
- */
 
 #ifndef _KEYBOARDTESTER_H_
 #define _KEYBOARDTESTER_H_

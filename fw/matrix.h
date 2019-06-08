@@ -25,6 +25,8 @@
 
 #include <LUFA/Drivers/USB/USB.h>
 
+#include "backlight.h"
+
 /**
  * Number of keyboard columns
  */
@@ -57,5 +59,10 @@ void matrixReset(void);
  * the scan loop.
  */
 bool matrixFillKeyboardReport(USB_KeyboardReport_Data_t *HIDReport);
+
+/**
+ * Init the keyboard matrix backlight timer.
+ */
+void init_backlight_timer(void);
 
 #endif /* _MATRIX_H_ */

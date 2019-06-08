@@ -15,7 +15,8 @@ KBD_TESTER_SRC = 		\
 	keyboard_tester.c	\
 	backlight.c		\
 	descriptors.c		\
-	matrix.c
+	matrix.c		\
+	time.c
 
 MCU          = atmega32u4
 ARCH         = AVR8

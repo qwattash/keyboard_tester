@@ -47,6 +47,18 @@ struct LedColor {
   uint8_t b;
 };
 
+extern struct LedColor white;
+extern struct LedColor red;
+extern struct LedColor green;
+extern struct LedColor blue;
+extern struct LedColor yellow;
+extern struct LedColor cyan;
+extern struct LedColor magenta;
+extern struct LedColor custom;
+extern struct LedColor custom1;
+extern struct LedColor custom2;
+extern struct LedColor black;
+
 struct CommandRegisterState {
   /** LED control register onoff section */
   uint8_t c_onoff[0x48];
@@ -155,6 +167,16 @@ enum LedFunctionConfiguration {
 };
 
 /**
+ * Auto breath mode channel
+ */
+enum ABMChannel {
+	ABM_PWM = 0x00,
+	ABM_CHANNEL_1 = 0x01,
+	ABM_CHANNEL_2 = 0x02,
+	ABM_CHANNEL_3 = 0x03,
+};
+
+/**
  * Initialize the backlight driver.
  */
 void backlight_init(struct IS3733_State *state, uint8_t addr);
@@ -164,6 +186,7 @@ void backlight_disable(struct IS3733_State *state);
 
 /* Rows and columns here are 0-based */
 int backlight_set(struct IS3733_State *state, uint16_t row, uint16_t col, struct LedColor lc);
+int backlight_abm_set(struct IS3733_State *state, uint16_t row, uint16_t col, enum ABMChannel abm);
 int backlight_off(struct IS3733_State *state, uint16_t row, uint16_t col);
 int backlight_brightness(struct IS3733_State *state, uint8_t value);
 
@@ -172,6 +195,12 @@ int backlight_brightness(struct IS3733_State *state, uint8_t value);
  */
 int backlight_check_trigger(struct IS3733_State *state);
 int backlight_check(struct IS3733_State *state);
+
+/**
+ * Top level operations
+ */
+int backlight_set_pattern(struct IS3733_State *state);
+int backlight_set_animation(struct IS3733_State *state);
 
 
 #endif /* _BACKLIGHT_H_ */
