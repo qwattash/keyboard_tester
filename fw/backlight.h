@@ -47,6 +47,7 @@ struct LedColor {
   uint8_t b;
 };
 
+extern struct LedColor bright_white;
 extern struct LedColor white;
 extern struct LedColor red;
 extern struct LedColor green;
@@ -186,6 +187,7 @@ void backlight_disable(struct IS3733_State *state);
 
 /* Rows and columns here are 0-based */
 int backlight_set(struct IS3733_State *state, uint16_t row, uint16_t col, struct LedColor lc);
+int backlight_set_all(struct IS3733_State *state, int half, struct LedColor lc);
 int backlight_abm_set(struct IS3733_State *state, uint16_t row, uint16_t col, enum ABMChannel abm);
 int backlight_off(struct IS3733_State *state, uint16_t row, uint16_t col);
 int backlight_brightness(struct IS3733_State *state, uint8_t value);

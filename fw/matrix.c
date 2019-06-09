@@ -33,7 +33,6 @@
 #include "time.h"
 
 bool ledChecked = false;
-bool ledChecking = false;
 
 static void matrixSelectColumn(int idx);
 static void matrixClearColumn(int idx);
@@ -48,9 +47,11 @@ typedef void (*timer_callback_t)(void);
  * 0 means no led selected.
  */
 struct ledSelection {
-  int row;
-  int col;
-  struct LedColor color;
+	int row;
+	int col;
+	struct LedColor color;
+	struct IS3733_State *state;
+	int half;
 };
 
 /*
@@ -69,7 +70,10 @@ static void backlight_timer_set(uint32_t nanosec, timer_callback_t cbk);
 static void backlight_do_check(void);
 static void rotate_selected_led(struct IS3733_State *state);
 static void breathe_selected_led(struct IS3733_State *state);
+static void breathe_all_led(struct IS3733_State *state);
 static void breathe_step(void);
+static void breathe_all_step(void);
+static bool backlight_color_step(void);
 
 BITSET_DECLARE(KeystateBitset, KEYBOARD_ROWS * KEYBOARD_COLUMNS);
 
@@ -182,16 +186,19 @@ matrix_key_action(int row, int column)
 
 	switch(idx) {
 	case 0:
-		if (!ledChecking) {
+		if (!ledChecked) {
 			DEBUG("Trigger LED check\r\n");
-			ledChecking = true;
 			ledChecked = false;
+			currentLed.row = 2;
 			/* Initialize backlight */
 			backlight_reset(&backlight_state);
 
 			/* Start LED diagnostic */
 			backlight_check_trigger(&backlight_state);
 			backlight_timer_set(1000000, &backlight_do_check);
+		}
+		else {
+			breathe_all_led(&backlight_state);
 		}
 		break;
 	case 1:
@@ -227,6 +234,7 @@ static void
 breathe_selected_led(struct IS3733_State *state)
 {
 	DEBUG("Breathe led [%d, %d]\r\n", currentLed.row, currentLed.col);
+	currentLed.state = state;
 	currentLed.color.r = 0;
 	currentLed.color.g = 0;
 	currentLed.color.b = 0;
@@ -235,16 +243,72 @@ breathe_selected_led(struct IS3733_State *state)
 }
 
 static void
-breathe_step()
+breathe_all_led(struct IS3733_State *state)
 {
-	uint8_t old_r = currentLed.color.r;
-
-	currentLed.color.b = currentLed.color.b + 0x20;
-
+	backlight_brightness(state, 255);
+	currentLed.state = state;
 	currentLed.color.r = 0;
 	currentLed.color.g = 0;
 	currentLed.color.b = 0;
-	backlight_timer_set(100000, &breathe_step);
+	currentLed.half = 0;
+	backlight_set_all(state, 0, black);
+	backlight_set_all(state, 1, black);
+	backlight_timer_set(100000, &breathe_all_step);
+}
+
+static bool
+backlight_color_step()
+{
+	uint8_t or = currentLed.color.r;
+	uint8_t og = currentLed.color.g;
+	uint8_t ob = currentLed.color.b;
+
+	currentLed.color.r += 0x20;
+	/* If wrap around, increment green */
+	if (currentLed.color.r <= or) {
+		currentLed.color.g += 0x20;
+		/* If wrap around, increment blue */
+		if (currentLed.color.g <= og) {
+			currentLed.color.b += 0x20;
+		}
+	}
+
+	DEBUG("Breathe step [%x, %x, %x]\r\n", currentLed.color.r,
+	      currentLed.color.g, currentLed.color.b);
+	if (ob <= currentLed.color.b)
+		return true;
+	return false;
+}
+
+static void
+breathe_step()
+{
+	bool repeat = backlight_color_step();
+
+	backlight_set(currentLed.state, currentLed.row, currentLed.col,
+		      currentLed.color);
+	/* When the blue wraps around we finish */
+	if (repeat)
+		backlight_timer_set(100000, &breathe_step);
+}
+
+static void
+breathe_all_step()
+{
+	bool repeat = backlight_color_step();
+
+	backlight_set_all(currentLed.state, currentLed.half, currentLed.color);
+	/* When the blue wraps around we finish */
+	if (repeat)
+		backlight_timer_set(100000, &breathe_all_step);
+	else if (currentLed.half == 0) {
+		currentLed.color.r = 0;
+		currentLed.color.g = 0;
+		currentLed.color.b = 0;
+		backlight_set_all(currentLed.state, 0, black);
+		currentLed.half = 1;
+		backlight_timer_set(100000, &breathe_all_step);
+	}
 }
 
 /**
@@ -254,29 +318,44 @@ breathe_step()
 static void
 rotate_selected_led(struct IS3733_State *state)
 {
+	DEBUG("Rotate led (%d, %d)\r\n", currentLed.row, currentLed.col);
+	backlight_brightness(state, 255);
+
 	if (currentLed.row != 2) {
 		/* Switch off current led. */
 		backlight_set(state, currentLed.row, currentLed.col, black);
 	}
+
 	/* Rotate led. */
-	if (currentLed.row == 2) {
+	if (currentLed.row == 0) {
+		/* Skip missing key */
+		if (currentLed.col == 0 || currentLed.col == 3)
+			currentLed.col += 2;
+		else if (currentLed.col == 5) {
+			currentLed.row += 1;
+			currentLed.col = 0;
+		}
+		else
+			currentLed.col += 1;
+	}
+	else if (currentLed.row == 1) {
+
+		if (currentLed.col == 5) {
+			currentLed.row += 1;
+			currentLed.col = 0;
+		}
+		else
+			currentLed.col += 1;
+	}
+	else {
 		currentLed.row = 0;
 		currentLed.col = 0;
 	}
-	else if (currentLed.col == 0 || currentLed.col == 3) {
-		/* Skip missing key */
-		currentLed.col += 2;
-	}
-	else if (currentLed.col == 5) {
-		currentLed.row += 1;
-		currentLed.col = 0;
-	}
-	else {
-		currentLed.col += 1;
-	}
+
+	DEBUG("Rotate led next (%d, %d)\r\n", currentLed.row, currentLed.col);
 	/* If we switched to something valid, light it up. */
 	if (currentLed.row != 2)
-		backlight_set(state, currentLed.row, currentLed.col, white);
+		backlight_set(state, currentLed.row, currentLed.col, bright_white);
 }
 
 /**
@@ -316,7 +395,6 @@ backlight_do_check()
 	DEBUG("LED check triggered\r\n");
 	backlight_check(&backlight_state);
 	ledChecked = true;
-	ledChecking = false;
 }
 
 /**

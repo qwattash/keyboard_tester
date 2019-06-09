@@ -31,6 +31,7 @@
 #include "error.h"
 #include "keyboard_tester.h"
 
+struct LedColor bright_white = {255, 255, 255};
 struct LedColor white = {128, 128, 128};
 struct LedColor red = {128, 0, 0};
 struct LedColor green = {0, 128, 0};
@@ -633,6 +634,32 @@ backlight_check(struct IS3733_State *state)
 	  state->is_command.c_onoff[idx + 1],
 	  state->is_command.c_onoff[idx + 2],
 	  state->is_command.c_onoff[idx + 3]);
+  }
+
+  return ERR_OK;
+}
+
+int
+backlight_set_all(struct IS3733_State *state, int lr, struct LedColor lc) {
+  int rc;
+
+  rc = is3733_write_cmd(0x01, state->bus_addr, CRP_FUNCTION, LFO_CONF);
+  if (rc != ERR_OK)
+    return rc;
+
+  if (lr == 0) {
+    backlight_set(state, 0, 3, lc);
+    backlight_set(state, 0, 5, lc);
+    backlight_set(state, 1, 3, lc);
+    backlight_set(state, 1, 4, lc);
+    backlight_set(state, 1, 5, lc);
+  }
+  else {
+    backlight_set(state, 0, 0, lc);
+    backlight_set(state, 0, 2, lc);
+    backlight_set(state, 1, 0, lc);
+    backlight_set(state, 1, 1, lc);
+    backlight_set(state, 1, 2, lc);
   }
 
   return ERR_OK;
